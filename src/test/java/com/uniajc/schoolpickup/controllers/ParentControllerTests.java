@@ -134,8 +134,7 @@ public class ParentControllerTests {
 		// Service mock definition
 		doNothing().when(parentService).deleteEntity(isA(Long.class));
 
-		// Controller request assertions
-		MvcResult result = mockMvc.perform( //
+		mockMvc.perform( //
 				delete("/parents/1") //
 						.contentType(MediaType.APPLICATION_JSON)) //
 				.andExpect(status().isNoContent()) //

@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 import com.uniajc.schoolpickup.generics.GenericEntity;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "parents")
 public class Parent extends GenericEntity {

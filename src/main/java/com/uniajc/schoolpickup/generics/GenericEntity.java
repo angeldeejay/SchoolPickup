@@ -15,7 +15,7 @@ public abstract class GenericEntity implements Serializable {
 	@Override
 	public String toString() {
 		ArrayList<String> fieldsData = new ArrayList<>();
-		Class klazz = this.getClass();
+		Class<? extends GenericEntity> klazz = this.getClass();
 		for (Field attribute : klazz.getDeclaredFields()) {
 			int mod = attribute.getModifiers();
 			if (Modifier.isAbstract(mod) || Modifier.isFinal(mod) | Modifier.isStatic(mod)) {
