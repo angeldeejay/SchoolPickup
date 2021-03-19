@@ -7,7 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest(properties = "spring.main.web-application-type=reactive")
 @AutoConfigureMockMvc
 public class SchoolPickupApplicationTests {
-	@Test
-	public void contextLoads() {
-	}
+
+    @Test
+    public void contextLoads() {
+    }
 }

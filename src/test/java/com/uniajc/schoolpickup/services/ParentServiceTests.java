@@ -18,100 +18,86 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.github.javafaker.Faker;
 import com.uniajc.schoolpickup.entities.Parent;
 import com.uniajc.schoolpickup.repositories.ParentRepository;
+import com.uniajc.schoolpickup.util.Mocker;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ParentServiceTests {
 
-	@Mock
-	private ParentRepository repository;
+    @Mock
+    private ParentRepository repository;
 
-	@InjectMocks
-	private ParentService service;
+    @InjectMocks
+    private ParentService service;
 
-	private Faker faker = new Faker();
+    @Test
+    public void test_FindAllEntities_Success() throws Exception {
+        List<Parent> parents = new ArrayList<Parent>();
+        for (int i = 0; i < 5; i++) {
+            parents.add(Mocker.getParent(Long.valueOf(i)));
+        }
 
-	private Parent getDummy(Long id) {
-		Parent parent = new Parent();
-		parent.setId(id);
-		parent.setFirstName(faker.name().firstName());
-		parent.setLastName(faker.name().lastName());
-		parent.setIdentificationType("CC");
-		parent.setIdentificationValue(faker.number().digits(11));
-		parent.setEmail(faker.internet().emailAddress());
-		parent.setPassword(faker.internet().password());
-		return parent;
-	}
+        when(repository.findAll()).thenReturn(parents);
 
-	@Test
-	public void test_FindAllEntities_Success() throws Exception {
-		List<Parent> parents = new ArrayList<Parent>();
-		for (int i = 0; i < 5; i++) {
-			parents.add(getDummy(Long.valueOf(i)));
-		}
+        List<Parent> foundParents = service.findAllEntities();
 
-		when(repository.findAll()).thenReturn(parents);
+        assertTrue(parents.containsAll(foundParents));
 
-		List<Parent> foundParents = service.findAllEntities();
+        verify(repository).findAll();
+    }
 
-		assertTrue(parents.containsAll(foundParents));
+    @Test
+    public void test_FindEntityById_Success() throws Exception {
+        Parent parent = Mocker.getParent(1L);
+        Optional<Parent> optionalParent = Optional.of(parent);
 
-		verify(repository).findAll();
-	}
+        when(repository.findById(isA(Long.class))).thenReturn(optionalParent);
 
-	@Test
-	public void test_FindEntityById_Success() throws Exception {
-		Parent parent = getDummy(1L);
-		Optional<Parent> optionalParent = Optional.of(parent);
+        Optional<Parent> foundParent = service.findEntityById(1L);
+        assertTrue(parent.equals(foundParent.get()));
 
-		when(repository.findById(isA(Long.class))).thenReturn(optionalParent);
+        verify(repository).findById(isA(Long.class));
+    }
 
-		Optional<Parent> foundParent = service.findEntityById(1L);
-		assertTrue(parent.equals(foundParent.get()));
+    @Test
+    public void test_SaveEntity_Success() throws Exception {
+        Parent parent = Mocker.getParent(1L);
 
-		verify(repository).findById(isA(Long.class));
-	}
+        when(repository.save(any(Parent.class))).thenReturn(parent);
 
-	@Test
-	public void test_SaveEntity_Success() throws Exception {
-		Parent parent = getDummy(1L);
+        Parent created = service.saveEntity(parent);
 
-		when(repository.save(any(Parent.class))).thenReturn(parent);
+        assertThat(created.getFirstName()).isSameAs(parent.getFirstName());
+        verify(repository).save(parent);
+    }
 
-		Parent created = service.saveEntity(parent);
+    @Test
+    public void test_DeleteEntity_Success() throws Exception {
+        Parent parent = Mocker.getParent(1L);
+        Optional<Parent> optionalParent = Optional.of(parent);
 
-		assertThat(created.getFirstName()).isSameAs(parent.getFirstName());
-		verify(repository).save(parent);
-	}
+        when(repository.findById(isA(Long.class))).thenReturn(optionalParent);
+        doNothing().when(repository).deleteById(isA(Long.class));
 
-	@Test
-	public void test_DeleteEntity_Success() throws Exception {
-		Parent parent = getDummy(1L);
-		Optional<Parent> optionalParent = Optional.of(parent);
+        service.deleteEntity(1L);
 
-		when(repository.findById(isA(Long.class))).thenReturn(optionalParent);
-		doNothing().when(repository).deleteById(isA(Long.class));
+        verify(repository).findById(isA(Long.class));
+        verify(repository).deleteById(isA(Long.class));
+    }
 
-		service.deleteEntity(1L);
+    @Test
+    public void test_UpdateEntity_Success() throws Exception {
+        Parent parent = Mocker.getParent(1L);
+        Optional<Parent> optionalParent = Optional.of(parent);
 
-		verify(repository).findById(isA(Long.class));
-		verify(repository).deleteById(isA(Long.class));
-	}
+        when(repository.findById(isA(Long.class))).thenReturn(optionalParent);
+        when(repository.save(isA(Parent.class))).thenReturn(parent);
 
-	@Test
-	public void test_UpdateEntity_Success() throws Exception {
-		Parent parent = getDummy(1L);
-		Optional<Parent> optionalParent = Optional.of(parent);
+        Optional<Parent> updatedParent = service.updateEntity(parent.getId(), parent);
+        assertTrue(parent.equals(updatedParent.get()));
 
-		when(repository.findById(isA(Long.class))).thenReturn(optionalParent);
-		when(repository.save(isA(Parent.class))).thenReturn(parent);
-
-		Optional<Parent> updatedParent = service.updateEntity(parent.getId(), parent);
-		assertTrue(parent.equals(updatedParent.get()));
-
-		verify(repository).findById(isA(Long.class));
-		verify(repository).save(isA(Parent.class));
-	}
+        verify(repository).findById(isA(Long.class));
+        verify(repository).save(isA(Parent.class));
+    }
 }

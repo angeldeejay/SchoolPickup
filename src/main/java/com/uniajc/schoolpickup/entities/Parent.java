@@ -1,11 +1,13 @@
 package com.uniajc.schoolpickup.entities;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.OneToOne;
 
 import com.uniajc.schoolpickup.generics.GenericEntity;
 
@@ -13,83 +15,77 @@ import com.uniajc.schoolpickup.generics.GenericEntity;
 @Entity
 @Table(name = "parents")
 public class Parent extends GenericEntity {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	Long id;
 
-	@Column(name = "first_name", nullable = false)
-	String firstName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    Long id;
 
-	@Column(name = "last_name", nullable = false)
-	String lastName;
+    @Column(name = "first_name", nullable = false)
+    String firstName;
 
-	@Column(name = "identification_type", nullable = false)
-	String identificationType;
+    @Column(name = "last_name", nullable = false)
+    String lastName;
 
-	@Column(name = "identification_value", nullable = false)
-	String identificationValue;
+    @Column(name = "identification_type", nullable = false)
+    String identificationType;
 
-	@Column(name = "email", nullable = false)
-	String email;
+    @Column(name = "identification_value", nullable = false)
+    String identificationValue;
 
-	@Column(name = "password", nullable = false)
-	String password;
+    @OneToOne(mappedBy = "parent")
+    private User user;
 
-	// Getters & Setters
-	public Long getId() {
-		return id;
-	}
+    @JsonCreator
+    public Parent() {
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    // Getters & Setters
+    public Long getId() {
+        return id;
+    }
 
-	public String getFirstName() {
-		return firstName;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public String getIdentificationType() {
-		return identificationType;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	public void setIdentificationType(String identificationType) {
-		this.identificationType = identificationType;
-	}
+    public String getIdentificationType() {
+        return identificationType;
+    }
 
-	public String getIdentificationValue() {
-		return identificationValue;
-	}
+    public void setIdentificationType(String identificationType) {
+        this.identificationType = identificationType;
+    }
 
-	public void setIdentificationValue(String identificationValue) {
-		this.identificationValue = identificationValue;
-	}
+    public String getIdentificationValue() {
+        return identificationValue;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setIdentificationValue(String identificationValue) {
+        this.identificationValue = identificationValue;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public User getUser() {
+        return user;
+    }
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

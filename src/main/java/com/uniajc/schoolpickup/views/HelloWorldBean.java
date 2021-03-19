@@ -10,8 +10,8 @@ import javax.inject.Named;
 @ViewScoped
 public class HelloWorldBean implements Serializable {
 
-	public String getMessage() {
-		return "Hello World";
-	}
+    public String getMessage() {
+        return "Hello World";
+    }
 
 }

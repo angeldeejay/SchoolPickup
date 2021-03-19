@@ -55,315 +55,316 @@ import java.util.regex.Pattern;
  * Some code comes from https://github.com/flextao/inflector
  *
  * @version $LastChangedRevision: 6 $ <br>
- *          $LastChangedDate: 2019-04-27 04:37:24 -0500 (Sat, 27 Apr 2019) $
+ * $LastChangedDate: 2019-04-27 04:37:24 -0500 (Sat, 27 Apr 2019) $
  * @author $LastChangedBy: avanegas $
  */
 public class Inflector {
 
-	protected static Function<String, String> capitalize = s -> {
-		if (s.length() < 2) {
-			return s.toUpperCase(US);
-		} else {
-			return toUpperCase(s.charAt(0)) + s.substring(1).toLowerCase(US);
-		}
-	};
+    protected static Function<String, String> capitalize = s -> {
+        if (s.length() < 2) {
+            return s.toUpperCase(US);
+        } else {
+            return toUpperCase(s.charAt(0)) + s.substring(1).toLowerCase(US);
+        }
+    };
 
-	protected static Function<String, String> lowerCase = s -> s.toLowerCase(US);
-	protected static Function<String, String> upperCase = s -> s.toUpperCase(US);
-	private static Pattern underscorePattern = compile("_");
-	private static Pattern dashPattern = compile("-");
-	private static Pattern doubleColonPattern = compile("::");
-	private static Pattern underscore1Pattern = compile("([A-Z]+)([A-Z][a-z])");
-	private static Pattern underscore2Pattern = compile("([a-z\\d])([A-Z])");
-	private static ArrayList<ReplacementRule> plurals;
-	private static ArrayList<ReplacementRule> singulars;
-	private static ArrayList<String> uncountables;
-	static {
-		plurals = new ArrayList<>();
-		plurals.add(0, new ReplacementRule("$", "s"));
-		plurals.add(0, new ReplacementRule("(?i)s$", "s"));
-		plurals.add(0, new ReplacementRule("(?i)(ax|test)is$", "$1es"));
-		plurals.add(0, new ReplacementRule("(?i)(octop|vir)us$", "$1i"));
-		plurals.add(0, new ReplacementRule("(?i)(alias|status)$", "$1es"));
-		plurals.add(0, new ReplacementRule("(?i)(bu)s$", "$1es"));
-		plurals.add(0, new ReplacementRule("(?i)(buffal|tomat)o$", "$1oes"));
-		plurals.add(0, new ReplacementRule("(?i)([ti])um$", "$1a"));
-		plurals.add(0, new ReplacementRule("sis$", "ses"));
-		plurals.add(0, new ReplacementRule("(?i)(?:([^f])fe|([lr])f)$", "$1$2ves"));
-		plurals.add(0, new ReplacementRule("(?i)(hive)$", "$1s"));
-		plurals.add(0, new ReplacementRule("(?i)([^aeiouy]|qu)y$", "$1ies"));
-		plurals.add(0, new ReplacementRule("(?i)(x|ch|ss|sh)$", "$1es"));
-		plurals.add(0, new ReplacementRule("(?i)(matr|vert|ind)(?:ix|ex)$", "$1ices"));
-		plurals.add(0, new ReplacementRule("(?i)([m|l])ouse$", "$1ice"));
-		plurals.add(0, new ReplacementRule("^(?i)(ox)$", "$1en"));
-		plurals.add(0, new ReplacementRule("(?i)(quiz)$", "$1zes"));
+    protected static Function<String, String> lowerCase = s -> s.toLowerCase(US);
+    protected static Function<String, String> upperCase = s -> s.toUpperCase(US);
+    private static Pattern underscorePattern = compile("_");
+    private static Pattern dashPattern = compile("-");
+    private static Pattern doubleColonPattern = compile("::");
+    private static Pattern underscore1Pattern = compile("([A-Z]+)([A-Z][a-z])");
+    private static Pattern underscore2Pattern = compile("([a-z\\d])([A-Z])");
+    private static ArrayList<ReplacementRule> plurals;
+    private static ArrayList<ReplacementRule> singulars;
+    private static ArrayList<String> uncountables;
 
-		singulars = new ArrayList<>();
-		singulars.add(0, new ReplacementRule("s$", ""));
-		singulars.add(0, new ReplacementRule("(n)ews$", "$1ews"));
-		singulars.add(0, new ReplacementRule("([ti])a$", "$1um"));
-		singulars.add(0,
-				new ReplacementRule("((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$", "$1$2sis"));
-		singulars.add(0, new ReplacementRule("(^analy)ses$", "$1sis"));
-		singulars.add(0, new ReplacementRule("([^f])ves$", "$1fe"));
-		singulars.add(0, new ReplacementRule("(hive)s$", "$1"));
-		singulars.add(0, new ReplacementRule("(tive)s$", "$1"));
-		singulars.add(0, new ReplacementRule("([lr])ves$", "$1f"));
-		singulars.add(0, new ReplacementRule("([^aeiouy]|qu)ies$", "$1y"));
-		singulars.add(0, new ReplacementRule("(s)eries$", "$1eries"));
-		singulars.add(0, new ReplacementRule("(m)ovies$", "$1ovie"));
-		singulars.add(0, new ReplacementRule("(x|ch|ss|sh)es$", "$1"));
-		singulars.add(0, new ReplacementRule("([m|l])ice$", "$1ouse"));
-		singulars.add(0, new ReplacementRule("(bus)es$", "$1"));
-		singulars.add(0, new ReplacementRule("(o)es$", "$1"));
-		singulars.add(0, new ReplacementRule("(shoe)s$", "$1"));
-		singulars.add(0, new ReplacementRule("(cris|ax|test)es$", "$1is"));
-		singulars.add(0, new ReplacementRule("(octop|vir)i$", "$1us"));
-		singulars.add(0, new ReplacementRule("(alias|status)es$", "$1"));
-		singulars.add(0, new ReplacementRule("(ox)en$", "$1"));
-		singulars.add(0, new ReplacementRule("(virt|ind)ices$", "$1ex"));
-		singulars.add(0, new ReplacementRule("(matr)ices$", "$1ix"));
-		singulars.add(0, new ReplacementRule("(quiz)zes$", "$1"));
+    static {
+        plurals = new ArrayList<>();
+        plurals.add(0, new ReplacementRule("$", "s"));
+        plurals.add(0, new ReplacementRule("(?i)s$", "s"));
+        plurals.add(0, new ReplacementRule("(?i)(ax|test)is$", "$1es"));
+        plurals.add(0, new ReplacementRule("(?i)(octop|vir)us$", "$1i"));
+        plurals.add(0, new ReplacementRule("(?i)(alias|status)$", "$1es"));
+        plurals.add(0, new ReplacementRule("(?i)(bu)s$", "$1es"));
+        plurals.add(0, new ReplacementRule("(?i)(buffal|tomat)o$", "$1oes"));
+        plurals.add(0, new ReplacementRule("(?i)([ti])um$", "$1a"));
+        plurals.add(0, new ReplacementRule("sis$", "ses"));
+        plurals.add(0, new ReplacementRule("(?i)(?:([^f])fe|([lr])f)$", "$1$2ves"));
+        plurals.add(0, new ReplacementRule("(?i)(hive)$", "$1s"));
+        plurals.add(0, new ReplacementRule("(?i)([^aeiouy]|qu)y$", "$1ies"));
+        plurals.add(0, new ReplacementRule("(?i)(x|ch|ss|sh)$", "$1es"));
+        plurals.add(0, new ReplacementRule("(?i)(matr|vert|ind)(?:ix|ex)$", "$1ices"));
+        plurals.add(0, new ReplacementRule("(?i)([m|l])ouse$", "$1ice"));
+        plurals.add(0, new ReplacementRule("^(?i)(ox)$", "$1en"));
+        plurals.add(0, new ReplacementRule("(?i)(quiz)$", "$1zes"));
 
-		irregular("person", "people");
-		irregular("man", "men");
-		irregular("child", "children");
-		irregular("sex", "sexes");
-		irregular("move", "moves");
-		irregular("cow", "kine");
+        singulars = new ArrayList<>();
+        singulars.add(0, new ReplacementRule("s$", ""));
+        singulars.add(0, new ReplacementRule("(n)ews$", "$1ews"));
+        singulars.add(0, new ReplacementRule("([ti])a$", "$1um"));
+        singulars.add(0,
+                new ReplacementRule("((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$", "$1$2sis"));
+        singulars.add(0, new ReplacementRule("(^analy)ses$", "$1sis"));
+        singulars.add(0, new ReplacementRule("([^f])ves$", "$1fe"));
+        singulars.add(0, new ReplacementRule("(hive)s$", "$1"));
+        singulars.add(0, new ReplacementRule("(tive)s$", "$1"));
+        singulars.add(0, new ReplacementRule("([lr])ves$", "$1f"));
+        singulars.add(0, new ReplacementRule("([^aeiouy]|qu)ies$", "$1y"));
+        singulars.add(0, new ReplacementRule("(s)eries$", "$1eries"));
+        singulars.add(0, new ReplacementRule("(m)ovies$", "$1ovie"));
+        singulars.add(0, new ReplacementRule("(x|ch|ss|sh)es$", "$1"));
+        singulars.add(0, new ReplacementRule("([m|l])ice$", "$1ouse"));
+        singulars.add(0, new ReplacementRule("(bus)es$", "$1"));
+        singulars.add(0, new ReplacementRule("(o)es$", "$1"));
+        singulars.add(0, new ReplacementRule("(shoe)s$", "$1"));
+        singulars.add(0, new ReplacementRule("(cris|ax|test)es$", "$1is"));
+        singulars.add(0, new ReplacementRule("(octop|vir)i$", "$1us"));
+        singulars.add(0, new ReplacementRule("(alias|status)es$", "$1"));
+        singulars.add(0, new ReplacementRule("(ox)en$", "$1"));
+        singulars.add(0, new ReplacementRule("(virt|ind)ices$", "$1ex"));
+        singulars.add(0, new ReplacementRule("(matr)ices$", "$1ix"));
+        singulars.add(0, new ReplacementRule("(quiz)zes$", "$1"));
 
-		uncountables = new ArrayList<>();
-		uncountables.add("equipment");
-		uncountables.add("information");
-		uncountables.add("rice");
-		uncountables.add("money");
-		uncountables.add("species");
-		uncountables.add("series");
-		uncountables.add("fish");
-		uncountables.add("sheep");
-	}
+        irregular("person", "people");
+        irregular("man", "men");
+        irregular("child", "children");
+        irregular("sex", "sexes");
+        irregular("move", "moves");
+        irregular("cow", "kine");
 
-	private static boolean charEquals(String s, int index, CharType type) {
-		if (index >= 0 && index < s.length()) {
-			return type.contains(s.charAt(index));
-		} else {
-			return false;
-		}
-	}
+        uncountables = new ArrayList<>();
+        uncountables.add("equipment");
+        uncountables.add("information");
+        uncountables.add("rice");
+        uncountables.add("money");
+        uncountables.add("species");
+        uncountables.add("series");
+        uncountables.add("fish");
+        uncountables.add("sheep");
+    }
 
-	private static void tokensPlusNew(List<String> tokens, String ss, int start, int end) {
-		if (end > start) {
-			tokens.add(ss.substring(start, end));
-		}
-	}
+    private static boolean charEquals(String s, int index, CharType type) {
+        if (index >= 0 && index < s.length()) {
+            return type.contains(s.charAt(index));
+        } else {
+            return false;
+        }
+    }
 
-	protected static List<String> genericSplit(String ss) {
-		List<String> tokens = new ArrayList<>();
-		int start = 0, current = 0;
-		while (true) {
-			int next = current + 1;
-			if (current >= ss.length()) {
-				tokensPlusNew(tokens, ss, start, current);
-				return tokens;
-			} else if (charEquals(ss, current, WHITESPACE)) {
-				tokensPlusNew(tokens, ss, start, current);
-				start = current = next;
-			} else if ((!charEquals(ss, current, UPPER) && charEquals(ss, current + 1, UPPER))
-					|| (!charEquals(ss, current, NUMBER) && charEquals(ss, current + 1, NUMBER))
-					|| (charEquals(ss, current, UPPER) && charEquals(ss, current + 1, UPPER)
-							&& charEquals(ss, current + 2, LOWER))) {
-				tokensPlusNew(tokens, ss, start, next);
-				start = current = next;
-			} else {
-				current = next;
-			}
-		}
-	}
+    private static void tokensPlusNew(List<String> tokens, String ss, int start, int end) {
+        if (end > start) {
+            tokens.add(ss.substring(start, end));
+        }
+    }
 
-	private static String convertCase(Function<String, String> firstFn, Function<String, String> restFn, String sep,
-			String s) {
-		if (s == null) {
-			return null;
-		}
+    protected static List<String> genericSplit(String ss) {
+        List<String> tokens = new ArrayList<>();
+        int start = 0, current = 0;
+        while (true) {
+            int next = current + 1;
+            if (current >= ss.length()) {
+                tokensPlusNew(tokens, ss, start, current);
+                return tokens;
+            } else if (charEquals(ss, current, WHITESPACE)) {
+                tokensPlusNew(tokens, ss, start, current);
+                start = current = next;
+            } else if ((!charEquals(ss, current, UPPER) && charEquals(ss, current + 1, UPPER))
+                    || (!charEquals(ss, current, NUMBER) && charEquals(ss, current + 1, NUMBER))
+                    || (charEquals(ss, current, UPPER) && charEquals(ss, current + 1, UPPER)
+                    && charEquals(ss, current + 2, LOWER))) {
+                tokensPlusNew(tokens, ss, start, next);
+                start = current = next;
+            } else {
+                current = next;
+            }
+        }
+    }
 
-		List<String> ss = genericSplit(s);
-		if (!ss.isEmpty()) {
-			ss.set(0, firstFn.apply(ss.get(0)));
-		}
-		if (ss.size() > 1) {
-			for (int i = 1; i < ss.size(); i++) {
-				ss.set(i, restFn.apply(ss.get(i)));
-			}
-		}
-		return join(sep, ss);
-	}
+    private static String convertCase(Function<String, String> firstFn, Function<String, String> restFn, String sep,
+            String s) {
+        if (s == null) {
+            return null;
+        }
 
-	public static String camelize(String s) {
-		return convertCase(lowerCase, capitalize, "", s);
-	}
+        List<String> ss = genericSplit(s);
+        if (!ss.isEmpty()) {
+            ss.set(0, firstFn.apply(ss.get(0)));
+        }
+        if (ss.size() > 1) {
+            for (int i = 1; i < ss.size(); i++) {
+                ss.set(i, restFn.apply(ss.get(i)));
+            }
+        }
+        return join(sep, ss);
+    }
 
-	public static String pascalize(String s) {
-		return convertCase(capitalize, capitalize, "", s);
-	}
+    public static String camelize(String s) {
+        return convertCase(lowerCase, capitalize, "", s);
+    }
 
-	/**
-	 * replace underscores with dashes in a string
-	 *
-	 * @param word
-	 * @return
-	 */
-	public static String dasherize(String word) {
-		Matcher m = underscorePattern.matcher(word);
-		return m.replaceAll("-");
-	}
+    public static String pascalize(String s) {
+        return convertCase(capitalize, capitalize, "", s);
+    }
 
-	/**
-	 * replace dashes with underscores in a string
-	 *
-	 * @param word
-	 * @return
-	 */
-	public static String underscorize(String word) {
-		Matcher m = dashPattern.matcher(word);
-		return m.replaceAll("_");
-	}
+    /**
+     * replace underscores with dashes in a string
+     *
+     * @param word
+     * @return
+     */
+    public static String dasherize(String word) {
+        Matcher m = underscorePattern.matcher(word);
+        return m.replaceAll("-");
+    }
 
-	/**
-	 * The reverse of camelize. Makes an underscored form from the expression in the
-	 * string.
-	 *
-	 * Changes '::' to '/' to convert namespaces to paths.
-	 *
-	 * @param word
-	 * @return
-	 */
-	public static String underscore(String word) {
+    /**
+     * replace dashes with underscores in a string
+     *
+     * @param word
+     * @return
+     */
+    public static String underscorize(String word) {
+        Matcher m = dashPattern.matcher(word);
+        return m.replaceAll("_");
+    }
 
-		String out;
-		Matcher m;
+    /**
+     * The reverse of camelize. Makes an underscored form from the expression in
+     * the string.
+     *
+     * Changes '::' to '/' to convert namespaces to paths.
+     *
+     * @param word
+     * @return
+     */
+    public static String underscore(String word) {
 
-		m = doubleColonPattern.matcher(word);
-		out = m.replaceAll("/");
+        String out;
+        Matcher m;
 
-		m = underscore1Pattern.matcher(out);
-		out = m.replaceAll("$1_$2");
+        m = doubleColonPattern.matcher(word);
+        out = m.replaceAll("/");
 
-		m = underscore2Pattern.matcher(out);
-		out = m.replaceAll("$1_$2");
+        m = underscore1Pattern.matcher(out);
+        out = m.replaceAll("$1_$2");
 
-		out = underscorize(out);
+        m = underscore2Pattern.matcher(out);
+        out = m.replaceAll("$1_$2");
 
-		return out.toLowerCase();
-	}
+        out = underscorize(out);
 
-	/**
-	 * return the plural form of word
-	 *
-	 * @param word
-	 * @return
-	 */
-	public static String pluralize(String word) {
-		String out = new String(word);
-		if ((out.length() == 0) || (!uncountables.contains(word.toLowerCase()))) {
-			for (ReplacementRule r : plurals) {
-				if (r.find(word)) {
-					out = r.replace(word);
-					break;
-				}
-			}
-		}
-		return out;
-	}
+        return out.toLowerCase();
+    }
 
-	/**
-	 * return the singular form of word
-	 *
-	 * @param word
-	 * @return
-	 */
-	public static String singularize(String word) {
-		String out = new String(word);
-		if ((out.length() == 0) || (!uncountables.contains(out.toLowerCase()))) {
-			for (ReplacementRule r : singulars) {
-				if (r.find(word)) {
-					out = r.replace(word);
-					break;
-				}
-			}
-		}
-		return out;
-	}
+    /**
+     * return the plural form of word
+     *
+     * @param word
+     * @return
+     */
+    public static String pluralize(String word) {
+        String out = new String(word);
+        if ((out.length() == 0) || (!uncountables.contains(word.toLowerCase()))) {
+            for (ReplacementRule r : plurals) {
+                if (r.find(word)) {
+                    out = r.replace(word);
+                    break;
+                }
+            }
+        }
+        return out;
+    }
 
-	public static void irregular(String singular, String plural) {
-		String regexp, repl;
+    /**
+     * return the singular form of word
+     *
+     * @param word
+     * @return
+     */
+    public static String singularize(String word) {
+        String out = new String(word);
+        if ((out.length() == 0) || (!uncountables.contains(out.toLowerCase()))) {
+            for (ReplacementRule r : singulars) {
+                if (r.find(word)) {
+                    out = r.replace(word);
+                    break;
+                }
+            }
+        }
+        return out;
+    }
 
-		if (singular.substring(0, 1).toUpperCase().equals(plural.substring(0, 1).toUpperCase())) {
-			// singular and plural start with the same letter
-			regexp = "(?i)(" + singular.substring(0, 1) + ")" + singular.substring(1) + "$";
-			repl = "$1" + plural.substring(1);
-			plurals.add(0, new ReplacementRule(regexp, repl));
+    public static void irregular(String singular, String plural) {
+        String regexp, repl;
 
-			regexp = "(?i)(" + plural.substring(0, 1) + ")" + plural.substring(1) + "$";
-			repl = "$1" + singular.substring(1);
-			singulars.add(0, new ReplacementRule(regexp, repl));
-		} else {
-			// singular and plural don't start with the same letter
-			regexp = singular.substring(0, 1).toUpperCase() + "(?i)" + singular.substring(1) + "$";
-			repl = plural.substring(0, 1).toUpperCase() + plural.substring(1);
-			plurals.add(0, new ReplacementRule(regexp, repl));
+        if (singular.substring(0, 1).toUpperCase().equals(plural.substring(0, 1).toUpperCase())) {
+            // singular and plural start with the same letter
+            regexp = "(?i)(" + singular.substring(0, 1) + ")" + singular.substring(1) + "$";
+            repl = "$1" + plural.substring(1);
+            plurals.add(0, new ReplacementRule(regexp, repl));
 
-			regexp = singular.substring(0, 1).toLowerCase() + "(?i)" + singular.substring(1) + "$";
-			repl = plural.substring(0, 1).toLowerCase() + plural.substring(1);
-			plurals.add(0, new ReplacementRule(regexp, repl));
+            regexp = "(?i)(" + plural.substring(0, 1) + ")" + plural.substring(1) + "$";
+            repl = "$1" + singular.substring(1);
+            singulars.add(0, new ReplacementRule(regexp, repl));
+        } else {
+            // singular and plural don't start with the same letter
+            regexp = singular.substring(0, 1).toUpperCase() + "(?i)" + singular.substring(1) + "$";
+            repl = plural.substring(0, 1).toUpperCase() + plural.substring(1);
+            plurals.add(0, new ReplacementRule(regexp, repl));
 
-			regexp = plural.substring(0, 1).toUpperCase() + "(?i)" + plural.substring(1) + "$";
-			repl = singular.substring(0, 1).toUpperCase() + singular.substring(1);
-			singulars.add(0, new ReplacementRule(regexp, repl));
+            regexp = singular.substring(0, 1).toLowerCase() + "(?i)" + singular.substring(1) + "$";
+            repl = plural.substring(0, 1).toLowerCase() + plural.substring(1);
+            plurals.add(0, new ReplacementRule(regexp, repl));
 
-			regexp = plural.substring(0, 1).toLowerCase() + "(?i)" + plural.substring(1) + "$";
-			repl = singular.substring(0, 1).toLowerCase() + singular.substring(1);
-			singulars.add(0, new ReplacementRule(regexp, repl));
-		}
-	}
+            regexp = plural.substring(0, 1).toUpperCase() + "(?i)" + plural.substring(1) + "$";
+            repl = singular.substring(0, 1).toUpperCase() + singular.substring(1);
+            singulars.add(0, new ReplacementRule(regexp, repl));
 
-	static class ReplacementRule {
+            regexp = plural.substring(0, 1).toLowerCase() + "(?i)" + plural.substring(1) + "$";
+            repl = singular.substring(0, 1).toLowerCase() + singular.substring(1);
+            singulars.add(0, new ReplacementRule(regexp, repl));
+        }
+    }
 
-		private Pattern p;
-		private Matcher m;
-		private String r;
+    static class ReplacementRule {
 
-		public ReplacementRule(String regexp, String replacement) {
-			p = compile(regexp);
-			r = replacement;
-		}
+        private Pattern p;
+        private Matcher m;
+        private String r;
 
-		public boolean find(String word) {
-			m = p.matcher(word);
-			return m.find();
-		}
+        public ReplacementRule(String regexp, String replacement) {
+            p = compile(regexp);
+            r = replacement;
+        }
 
-		public String replace(String word) {
-			m = p.matcher(word);
-			return m.replaceAll(this.r);
-		}
-	}
+        public boolean find(String word) {
+            m = p.matcher(word);
+            return m.find();
+        }
 
-	public enum CharType {
-		NUMBER('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'), WHITESPACE('-', '_', ' ', '\t', '\n', '\r'),
-		UPPER('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
-				'V', 'W', 'X', 'Y', 'Z'),
-		LOWER('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
-				'v', 'w', 'x', 'y', 'z'),
-		OTHER;
+        public String replace(String word) {
+            m = p.matcher(word);
+            return m.replaceAll(this.r);
+        }
+    }
 
-		private Set<Character> chars;
+    public enum CharType {
+        NUMBER('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'), WHITESPACE('-', '_', ' ', '\t', '\n', '\r'),
+        UPPER('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
+                'V', 'W', 'X', 'Y', 'Z'),
+        LOWER('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z'),
+        OTHER;
 
-		CharType(Character... cs) {
-			chars = new HashSet<>(Arrays.asList(cs));
-		}
+        private Set<Character> chars;
 
-		public boolean contains(char c) {
-			return chars.contains(c);
-		}
-	}
+        CharType(Character... cs) {
+            chars = new HashSet<>(Arrays.asList(cs));
+        }
+
+        public boolean contains(char c) {
+            return chars.contains(c);
+        }
+    }
 }

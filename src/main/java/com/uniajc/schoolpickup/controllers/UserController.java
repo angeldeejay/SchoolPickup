@@ -11,52 +11,54 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.uniajc.schoolpickup.entities.Parent;
+import com.uniajc.schoolpickup.entities.User;
 import com.uniajc.schoolpickup.generics.GenericController;
-import com.uniajc.schoolpickup.services.ParentService;
+import com.uniajc.schoolpickup.services.UserService;
+import javax.servlet.http.HttpServletRequest;
+import org.springframework.security.access.annotation.Secured;
 
 @RestController
-@RequestMapping(value = "/parents")
-public class ParentController extends GenericController<Parent> {
+@RequestMapping(value = "/users")
+public class UserController extends GenericController<User> {
 
     @Autowired
-    ParentService parentService;
+    UserService userService;
 
-    // Route: GET /parents
+    // Route: GET /users
     @Override
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public List<Parent> getAll() {
-        return parentService.findAllEntities();
+    public List<User> getAll() {
+        return userService.findAllEntities();
     }
 
-    // Route: GET /parents/{id}
+    // Route: GET /users/{id}
     @Override
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Optional<Parent> getById(@PathVariable Long id) {
-        return parentService.findEntityById(id);
+    public Optional<User> getById(@PathVariable Long id) {
+        return userService.findEntityById(id);
     }
 
-    // Route: POST /parents
+    // Route: POST /users
     @Override
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public Parent add(Parent parent) {
-        return parentService.saveEntity(parent);
+    public User add(User user) {
+        return userService.saveEntity(user);
     }
 
-    // Route: DELETE /parents/{id}
+    // Route: DELETE /users/{id}
     @Override
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
-        parentService.deleteEntity(id);
+        userService.deleteEntity(id);
     }
 
-    // Route: PUT /parents/{id}
+    // Route: PUT /users/{id}
     @Override
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Optional<Parent> update(@PathVariable Long id, Parent parent) {
-        return parentService.updateEntity(id, parent);
+    public Optional<User> update(@PathVariable Long id, User user) {
+        return userService.updateEntity(id, user);
     }
 
     // Route: GET /test

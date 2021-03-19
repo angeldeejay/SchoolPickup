@@ -6,32 +6,33 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.uniajc.schoolpickup.entities.Parent;
+import com.uniajc.schoolpickup.entities.User;
 import com.uniajc.schoolpickup.generics.GenericService;
-import com.uniajc.schoolpickup.repositories.ParentRepository;
+import com.uniajc.schoolpickup.repositories.UserRepository;
+import com.uniajc.schoolpickup.util.Encryption;
 
 @Service
-public class ParentService extends GenericService<Parent> {
+public class UserService extends GenericService<User> {
 
     @Autowired
-    ParentRepository repository;
+    UserRepository repository;
 
     @Override
-    public List<Parent> findAllEntities() {
+    public List<User> findAllEntities() {
         return repository.findAll();
     }
 
     @Override
-    public Optional<Parent> findEntityById(Long id) {
+    public Optional<User> findEntityById(Long id) {
         return repository.findById(id);
     }
 
     @Override
-    public Parent saveEntity(Parent entity) {
+    public User saveEntity(User entity) {
         if (entity != null) {
             return repository.save(entity);
         }
-        return new Parent();
+        return new User();
     }
 
     @Override
@@ -42,14 +43,13 @@ public class ParentService extends GenericService<Parent> {
     }
 
     @Override
-    public Optional<Parent> updateEntity(Long id, Parent data) {
-        Optional<Parent> entity = repository.findById(id);
+    public Optional<User> updateEntity(Long id, User data) {
+        Optional<User> entity = repository.findById(id);
         if (entity.isPresent()) {
-            Parent entityTarget = entity.get();
-            entityTarget.setFirstName(data.getFirstName());
-            entityTarget.setLastName(data.getLastName());
-            entityTarget.setIdentificationType(data.getIdentificationType());
-            entityTarget.setIdentificationValue(data.getIdentificationValue());
+            User entityTarget = entity.get();
+            entityTarget.setEmail(data.getEmail());
+            entityTarget.setPassword(data.getPassword());
+            entityTarget.setParent(data.getParent());
             return Optional.of(repository.save(entityTarget));
         }
         return Optional.empty();
