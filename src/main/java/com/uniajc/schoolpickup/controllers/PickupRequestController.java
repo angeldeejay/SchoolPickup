@@ -11,52 +11,52 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.uniajc.schoolpickup.entities.User;
+import com.uniajc.schoolpickup.entities.PickupRequest;
 import com.uniajc.schoolpickup.generics.GenericController;
-import com.uniajc.schoolpickup.services.UserService;
+import com.uniajc.schoolpickup.services.PickupRequestService;
 
 @RestController
-@RequestMapping(value = "/users")
-public class UserController extends GenericController<User> {
+@RequestMapping(value = "/pickup-requests")
+public class PickupRequestController extends GenericController<PickupRequest> {
 
     @Autowired
-    UserService userService;
+    PickupRequestService pickupRequestService;
 
-    // Route: GET /users
+    // Route: GET /pickup-requests
     @Override
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public List<User> getAll() {
-        return userService.findAllEntities();
+    public List<PickupRequest> getAll() {
+        return pickupRequestService.findAllEntities();
     }
 
-    // Route: GET /users/{id}
+    // Route: GET /pickup-requests/{id}
     @Override
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Optional<User> getById(@PathVariable Long id) {
-        return userService.findEntityById(id);
+    public Optional<PickupRequest> getById(@PathVariable Long id) {
+        return pickupRequestService.findEntityById(id);
     }
 
-    // Route: POST /users
+    // Route: POST /pickup-requests
     @Override
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public User add(User user) {
-        return userService.saveEntity(user);
+    public PickupRequest add(PickupRequest pickupRequest) {
+        return pickupRequestService.saveEntity(pickupRequest);
     }
 
-    // Route: DELETE /users/{id}
+    // Route: DELETE /pickup-requests/{id}
     @Override
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
-        userService.deleteEntity(id);
+        pickupRequestService.deleteEntity(id);
     }
 
-    // Route: PUT /users/{id}
+    // Route: PUT /pickup-requests/{id}
     @Override
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Optional<User> update(@PathVariable Long id, User user) {
-        return userService.updateEntity(id, user);
+    public Optional<PickupRequest> update(@PathVariable Long id, PickupRequest pickupRequest) {
+        return pickupRequestService.updateEntity(id, pickupRequest);
     }
 
     // Route: GET /test

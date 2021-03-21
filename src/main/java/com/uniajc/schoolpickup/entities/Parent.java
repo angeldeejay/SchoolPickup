@@ -1,15 +1,18 @@
 package com.uniajc.schoolpickup.entities;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.OneToOne;
 
 import com.uniajc.schoolpickup.generics.GenericEntity;
+import javax.persistence.CascadeType;
 
 @SuppressWarnings("serial")
 @Entity
@@ -36,9 +39,8 @@ public class Parent extends GenericEntity {
     @OneToOne(mappedBy = "parent")
     private User user;
 
-    @JsonCreator
-    public Parent() {
-    }
+    @OneToMany(mappedBy="parent", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Student> students;
 
     // Getters & Setters
     public Long getId() {
@@ -87,5 +89,13 @@ public class Parent extends GenericEntity {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
     }
 }

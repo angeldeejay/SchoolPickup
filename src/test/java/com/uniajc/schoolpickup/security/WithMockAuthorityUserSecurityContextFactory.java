@@ -38,7 +38,8 @@ class WithMockAuthorityUserSecurityContextFactory implements WithSecurityContext
         user.setEmail("admin@company.com");
         user.setParent(null);
         CustomUserDetails principal = new CustomUserDetails(user);
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(principal, principal.getPassword(), principal.getAuthorities());
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(principal,
+                principal.getPassword(), principal.getAuthorities());
         token.setDetails(principal);
         return token;
     }
@@ -49,7 +50,8 @@ class WithMockAuthorityUserSecurityContextFactory implements WithSecurityContext
         user.setEmail("parent@company.com");
         user.setParent(Mocker.getParent(user.getId()));
         CustomUserDetails principal = new CustomUserDetails(user);
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(principal, principal.getPassword(), principal.getAuthorities());
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(principal,
+                principal.getPassword(), principal.getAuthorities());
         token.setDetails(principal);
         return token;
     }

@@ -1,6 +1,5 @@
 package com.uniajc.schoolpickup.security;
 
-import com.uniajc.schoolpickup.services.CustomUserDetailsService;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
-    @Bean({"customUserDetailsService", "customUserDetailsService"})
+    @Bean({ "customUserDetailsService", "customUserDetailsService" })
     public UserDetailsService userDetailsService() {
         return new CustomUserDetailsService();
     }
@@ -35,13 +34,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean("authenticationManager")
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
-        System.out.println("Config::configure::manager");
         return super.authenticationManagerBean();
     }
 
     @Bean("authenticationProvider")
     public DaoAuthenticationProvider authenticationProvider() {
-        System.out.println("Config::configure::provider");
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService());
         authProvider.setPasswordEncoder(passwordEncoder());
@@ -51,24 +48,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        System.out.println("Config::configure::manager");
         auth.authenticationProvider(authenticationProvider());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        System.out.println("Config::configure::http");
-        http.httpBasic()
-                .and()
-                .authorizeRequests()
-                .antMatchers("/", "/login**", "/signup**").permitAll()
+        http.authorizeRequests().antMatchers("/", "/login**", "/signup**").permitAll()
                 .antMatchers("/users/", "/users*", "/users**", "/users/*", "/users/*/**").hasAnyAuthority("ADMIN")
-                .antMatchers("/parents/", "/parents*", "/parents**", "/parents/*", "/parents/*/**").hasAnyAuthority("ADMIN", "PARENT")
-                .antMatchers("/students/", "/students*", "/students**", "/students/*", "/students/*/**").hasAnyAuthority("ADMIN", "PARENT")
-                .antMatchers("/pickup-requests/", "/pickup-requests*", "/pickup-requests**", "/pickup-requests/*", "/pickup-requests/*/**").hasAnyAuthority("ADMIN", "PARENT")
-                .antMatchers("/**").hasAnyAuthority("ADMIN", "PARENT")
-                .and()
-                .csrf().disable()
-                .formLogin().disable();
+                .antMatchers("/parents/", "/parents*", "/parents**", "/parents/*", "/parents/*/**")
+                .hasAnyAuthority("ADMIN")
+                .antMatchers("/students/", "/students*", "/students**", "/students/*", "/students/*/**")
+                .hasAnyAuthority("ADMIN", "PARENT")
+                .antMatchers("/pickup-requests/", "/pickup-requests*", "/pickup-requests**", "/pickup-requests/*",
+                        "/pickup-requests/*/**")
+                .hasAnyAuthority("ADMIN", "PARENT").antMatchers("/**").hasAnyAuthority("ADMIN", "PARENT").and()
+                .httpBasic().and().csrf().disable().formLogin().disable();
     }
 }

@@ -68,7 +68,7 @@ public class ParentServiceTests {
 
         Parent created = service.saveEntity(parent);
 
-        assertThat(created.getFirstName()).isSameAs(parent.getFirstName());
+        assertThat(created.equals(parent));
         verify(repository).save(parent);
     }
 

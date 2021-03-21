@@ -1,8 +1,8 @@
 package com.uniajc.schoolpickup.controllers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.uniajc.schoolpickup.entities.Parent;
-import com.uniajc.schoolpickup.services.ParentService;
+import com.uniajc.schoolpickup.entities.Student;
+import com.uniajc.schoolpickup.services.StudentService;
 import com.uniajc.schoolpickup.util.JsonUtil;
 import com.uniajc.schoolpickup.util.Mocker;
 import java.util.ArrayList;
@@ -33,57 +33,75 @@ import com.uniajc.schoolpickup.security.WithMockAuthorityUser;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ParentControllerTests {
+public class StudentControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private ParentService parentService;
+    private StudentService studentService;
 
     @Test
     @WithMockAuthorityUser("admin")
     public void test_FindAllEntities_Admin_Success() throws Exception {
-        List<Parent> parents = new ArrayList<>();
+        List<Student> students = new ArrayList<>();
         for (int i = 1; i <= 5; i++) {
-            parents.add(Mocker.getParent(Long.valueOf(i)));
+            students.add(Mocker.getStudent(Long.valueOf(i)));
         }
 
         // Service mock definition
-        given(parentService.findAllEntities()).willReturn(parents);
+        given(studentService.findAllEntities()).willReturn(students);
 
         // Controller request assertions
         MvcResult result = mockMvc.perform( //
-                get("/parents") //
+                get("/students") //
                         .contentType(MediaType.APPLICATION_JSON)) //
                 .andExpect(status().isOk()) //
                 .andReturn();
 
         // Controller response assertions
         String jsonResponse = result.getResponse().getContentAsString();
-        List<Parent> foundParents = JsonUtil.toInstances(jsonResponse, new TypeReference<List<Parent>>() {
+        List<Student> foundStudents = JsonUtil.toInstances(jsonResponse, new TypeReference<List<Student>>() {
         });
 
-        assertTrue(parents.containsAll(foundParents));
+        assertTrue(students.containsAll(foundStudents));
 
         // Controller call should reach the service
-        verify(parentService).findAllEntities();
+        verify(studentService).findAllEntities();
     }
 
     @WithMockAuthorityUser("parent")
-    public void test_FindAllEntities_Parent_Failure() throws Exception {
+    public void test_FindAllEntities_Parent_Success() throws Exception {
+        List<Student> students = new ArrayList<>();
+        for (int i = 1; i <= 5; i++) {
+            students.add(Mocker.getStudent(Long.valueOf(i)));
+        }
+
+        // Service mock definition
+        given(studentService.findAllEntities()).willReturn(students);
+
         // Controller request assertions
         MvcResult result = mockMvc.perform( //
-                get("/parents") //
+                get("/students") //
                         .contentType(MediaType.APPLICATION_JSON)) //
-                .andExpect(status().isForbidden()) //
+                .andExpect(status().isOk()) //
                 .andReturn();
+
+        // Controller response assertions
+        String jsonResponse = result.getResponse().getContentAsString();
+        List<Student> foundStudents = JsonUtil.toInstances(jsonResponse, new TypeReference<List<Student>>() {
+        });
+
+        assertTrue(students.containsAll(foundStudents));
+
+        // Controller call should reach the service
+        verify(studentService).findAllEntities();
     }
 
     public void test_FindAllEntities_Anonymous_Failure() throws Exception {
         // Controller request assertions
         MvcResult result = mockMvc.perform( //
-                get("/parents") //
+                get("/students") //
                         .contentType(MediaType.APPLICATION_JSON)) //
                 .andExpect(status().isUnauthorized()) //
                 .andReturn();
@@ -92,43 +110,56 @@ public class ParentControllerTests {
     @Test
     @WithMockAuthorityUser("admin")
     public void test_GetById_Admin_Success() throws Exception {
-        Parent parent = Mocker.getParent(1L);
-        Optional<Parent> optionalParent = Optional.of(parent);
+        Student student = Mocker.getStudent(1L);
+        Optional<Student> optionalStudent = Optional.of(student);
 
         // Service mock definition
-        given(parentService.findEntityById(isA(Long.class))).willReturn(optionalParent);
+        given(studentService.findEntityById(isA(Long.class))).willReturn(optionalStudent);
 
         // Controller request assertions
         MvcResult result = mockMvc.perform( //
-                get("/parents/" + parent.getId().toString()) //
+                get("/students/" + student.getId().toString()) //
                         .contentType(MediaType.APPLICATION_JSON)) //
                 .andExpect(status().isOk()) //
                 .andReturn();
 
         // Controller response assertions
-        Parent foundParent = JsonUtil.toInstance(result.getResponse().getContentAsString(), Parent.class);
-        assertTrue(parent.equals(foundParent));
+        Student foundStudent = JsonUtil.toInstance(result.getResponse().getContentAsString(), Student.class);
+        assertTrue(student.equals(foundStudent));
 
         // Controller call should reach the service
-        verify(parentService).findEntityById(isA(Long.class));
+        verify(studentService).findEntityById(isA(Long.class));
     }
 
     @Test
     @WithMockAuthorityUser("parent")
-    public void test_GetById_Parent_Failure() throws Exception {
+    public void test_GetById_Parent_Success() throws Exception {
+        Student student = Mocker.getStudent(1L);
+        Optional<Student> optionalStudent = Optional.of(student);
+
+        // Service mock definition
+        given(studentService.findEntityById(isA(Long.class))).willReturn(optionalStudent);
+
         // Controller request assertions
         MvcResult result = mockMvc.perform( //
-                get("/parents/1") //
+                get("/students/" + student.getId().toString()) //
                         .contentType(MediaType.APPLICATION_JSON)) //
-                .andExpect(status().isForbidden()) //
+                .andExpect(status().isOk()) //
                 .andReturn();
+
+        // Controller response assertions
+        Student foundStudent = JsonUtil.toInstance(result.getResponse().getContentAsString(), Student.class);
+        assertTrue(student.equals(foundStudent));
+
+        // Controller call should reach the service
+        verify(studentService).findEntityById(isA(Long.class));
     }
 
     @Test
     public void test_GetById_Anonymous_Failure() throws Exception {
         // Controller request assertions
         MvcResult result = mockMvc.perform( //
-                get("/parents/1") //
+                get("/students/1") //
                         .contentType(MediaType.APPLICATION_JSON)) //
                 .andExpect(status().isUnauthorized()) //
                 .andReturn();
@@ -137,48 +168,59 @@ public class ParentControllerTests {
     @Test
     @WithMockAuthorityUser("admin")
     public void test_Add_Admin_Success() throws Exception {
-        Parent parent = Mocker.getParent(1L);
+        Student student = Mocker.getStudent(1L);
 
         // Service mock definition
-        given(parentService.saveEntity(isA(Parent.class))).willReturn(parent);
+        given(studentService.saveEntity(isA(Student.class))).willReturn(student);
 
         // Controller request assertions
         MvcResult result = mockMvc.perform( //
-                post("/parents") //
+                post("/students") //
                         .contentType(MediaType.APPLICATION_JSON) //
-                        .content(JsonUtil.toJson(parent))) //
+                        .content(JsonUtil.toJson(student))) //
                 .andExpect(status().isCreated()) //
                 .andReturn();
 
         // Controller response assertions
-        Parent createdParent = JsonUtil.toInstance(result.getResponse().getContentAsString(), Parent.class);
-        assertTrue(parent.equals(createdParent));
+        Student createdStudent = JsonUtil.toInstance(result.getResponse().getContentAsString(), Student.class);
+        assertTrue(student.equals(createdStudent));
 
         // Controller call should reach the service
-        verify(parentService).saveEntity(isA(Parent.class));
+        verify(studentService).saveEntity(isA(Student.class));
     }
 
     @Test
     @WithMockAuthorityUser("parent")
-    public void test_Add_Parent_Failure() throws Exception {
-        Parent parent = Mocker.getParent(1L);
+    public void test_Add_Parent_Success() throws Exception {
+        Student student = Mocker.getStudent(1L);
+
+        // Service mock definition
+        given(studentService.saveEntity(isA(Student.class))).willReturn(student);
+
         // Controller request assertions
         MvcResult result = mockMvc.perform( //
-                post("/parents") //
+                post("/students") //
                         .contentType(MediaType.APPLICATION_JSON) //
-                        .content(JsonUtil.toJson(parent))) //
-                .andExpect(status().isForbidden()) //
+                        .content(JsonUtil.toJson(student))) //
+                .andExpect(status().isCreated()) //
                 .andReturn();
+
+        // Controller response assertions
+        Student createdStudent = JsonUtil.toInstance(result.getResponse().getContentAsString(), Student.class);
+        assertTrue(student.equals(createdStudent));
+
+        // Controller call should reach the service
+        verify(studentService).saveEntity(isA(Student.class));
     }
 
     @Test
     public void test_Add_Anonymous_Failure() throws Exception {
-        Parent parent = Mocker.getParent(1L);
+        Student student = Mocker.getStudent(1L);
         // Controller request assertions
         MvcResult result = mockMvc.perform( //
-                post("/parents") //
+                post("/students") //
                         .contentType(MediaType.APPLICATION_JSON) //
-                        .content(JsonUtil.toJson(parent))) //
+                        .content(JsonUtil.toJson(student))) //
                 .andExpect(status().isUnauthorized()) //
                 .andReturn();
     }
@@ -187,32 +229,38 @@ public class ParentControllerTests {
     @WithMockAuthorityUser("admin")
     public void test_Delete_Admin_Success() throws Exception {
         // Service mock definition
-        doNothing().when(parentService).deleteEntity(isA(Long.class));
+        doNothing().when(studentService).deleteEntity(isA(Long.class));
 
         mockMvc.perform( //
-                delete("/parents/1") //
+                delete("/students/1") //
                         .contentType(MediaType.APPLICATION_JSON)) //
                 .andExpect(status().isNoContent()) //
                 .andReturn();
 
         // Controller call should reach the service
-        verify(parentService).deleteEntity(isA(Long.class));
+        verify(studentService).deleteEntity(isA(Long.class));
     }
 
     @Test
     @WithMockAuthorityUser("parent")
-    public void test_Delete_Parent_Failure() throws Exception {
+    public void test_Delete_Parent_Success() throws Exception {
+        // Service mock definition
+        doNothing().when(studentService).deleteEntity(isA(Long.class));
+
         mockMvc.perform( //
-                delete("/parents/1") //
+                delete("/students/1") //
                         .contentType(MediaType.APPLICATION_JSON)) //
-                .andExpect(status().isForbidden()) //
+                .andExpect(status().isNoContent()) //
                 .andReturn();
+
+        // Controller call should reach the service
+        verify(studentService).deleteEntity(isA(Long.class));
     }
 
     @Test
     public void test_Delete_Anonymous_Failure() throws Exception {
         mockMvc.perform( //
-                delete("/parents/1") //
+                delete("/students/1") //
                         .contentType(MediaType.APPLICATION_JSON)) //
                 .andExpect(status().isUnauthorized()) //
                 .andReturn();
@@ -221,49 +269,61 @@ public class ParentControllerTests {
     @Test
     @WithMockAuthorityUser("admin")
     public void test_Update_Admin_Success() throws Exception {
-        Parent parent = Mocker.getParent(1L);
-        Optional<Parent> optionalParent = Optional.of(parent);
+        Student student = Mocker.getStudent(1L);
+        Optional<Student> optionalStudent = Optional.of(student);
 
         // Service mock definition
-        given(parentService.updateEntity(isA(Long.class), isA(Parent.class))).willReturn(optionalParent);
+        given(studentService.updateEntity(isA(Long.class), isA(Student.class))).willReturn(optionalStudent);
 
         // Controller request assertions
         MvcResult result = mockMvc.perform( //
-                put("/parents/" + parent.getId().toString()) //
+                put("/students/" + student.getId().toString()) //
                         .contentType(MediaType.APPLICATION_JSON) //
-                        .content(JsonUtil.toJson(parent))) //
+                        .content(JsonUtil.toJson(student))) //
                 .andExpect(status().isOk()) //
                 .andReturn();
 
         // Controller response assertions
-        Parent updatedParent = JsonUtil.toInstance(result.getResponse().getContentAsString(), Parent.class);
-        assertTrue(parent.equals(updatedParent));
+        Student updatedStudent = JsonUtil.toInstance(result.getResponse().getContentAsString(), Student.class);
+        assertTrue(student.equals(updatedStudent));
 
         // Controller call should reach the service
-        verify(parentService).updateEntity(isA(Long.class), isA(Parent.class));
+        verify(studentService).updateEntity(isA(Long.class), isA(Student.class));
     }
 
     @Test
     @WithMockAuthorityUser("parent")
-    public void test_Update_Parent_Failure() throws Exception {
-        Parent parent = Mocker.getParent(1L);
+    public void test_Update_Parent_Success() throws Exception {
+        Student student = Mocker.getStudent(1L);
+        Optional<Student> optionalStudent = Optional.of(student);
+
+        // Service mock definition
+        given(studentService.updateEntity(isA(Long.class), isA(Student.class))).willReturn(optionalStudent);
+
         // Controller request assertions
         MvcResult result = mockMvc.perform( //
-                put("/parents/" + parent.getId().toString()) //
+                put("/students/" + student.getId().toString()) //
                         .contentType(MediaType.APPLICATION_JSON) //
-                        .content(JsonUtil.toJson(parent))) //
-                .andExpect(status().isForbidden()) //
+                        .content(JsonUtil.toJson(student))) //
+                .andExpect(status().isOk()) //
                 .andReturn();
+
+        // Controller response assertions
+        Student updatedStudent = JsonUtil.toInstance(result.getResponse().getContentAsString(), Student.class);
+        assertTrue(student.equals(updatedStudent));
+
+        // Controller call should reach the service
+        verify(studentService).updateEntity(isA(Long.class), isA(Student.class));
     }
 
     @Test
     public void test_Update_Anonymous_Failure() throws Exception {
-        Parent parent = Mocker.getParent(1L);
+        Student student = Mocker.getStudent(1L);
         // Controller request assertions
         MvcResult result = mockMvc.perform( //
-                put("/parents/" + parent.getId().toString()) //
+                put("/students/" + student.getId().toString()) //
                         .contentType(MediaType.APPLICATION_JSON) //
-                        .content(JsonUtil.toJson(parent))) //
+                        .content(JsonUtil.toJson(student))) //
                 .andExpect(status().isUnauthorized()) //
                 .andReturn();
     }

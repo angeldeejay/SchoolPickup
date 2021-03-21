@@ -1,4 +1,4 @@
-package com.uniajc.schoolpickup.services;
+package com.uniajc.schoolpickup.security;
 
 import com.uniajc.schoolpickup.entities.User;
 import com.uniajc.schoolpickup.repositories.UserRepository;

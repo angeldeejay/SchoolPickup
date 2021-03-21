@@ -2,8 +2,9 @@ package com.uniajc.schoolpickup.util;
 
 import com.github.javafaker.Faker;
 import com.uniajc.schoolpickup.entities.Parent;
+import com.uniajc.schoolpickup.entities.PickupRequest;
+import com.uniajc.schoolpickup.entities.Student;
 import com.uniajc.schoolpickup.entities.User;
-import com.uniajc.schoolpickup.generics.GenericEntity;
 
 public class Mocker {
 
@@ -28,4 +29,21 @@ public class Mocker {
         return user;
     }
 
+    public static Student getStudent(Long id) {
+        Student student = new Student();
+        student.setId(id);
+        student.setFirstName(faker.name().firstName());
+        student.setLastName(faker.name().lastName());
+        student.setParent(getParent(id));
+        return student;
+    }
+
+    public static PickupRequest getPickupRequest(Long id) {
+        PickupRequest pickupRequest = new PickupRequest();
+        pickupRequest.setId(id);
+        pickupRequest.setSlot(Integer.parseInt(faker.number().digit()));
+        pickupRequest.setParent(getParent(id));
+        pickupRequest.setStudent(getStudent(id));
+        return pickupRequest;
+    }
 }
