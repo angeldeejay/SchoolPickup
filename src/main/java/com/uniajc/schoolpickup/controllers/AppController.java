@@ -19,14 +19,8 @@ public class AppController {
 
   @Autowired private UserRepository repository;
 
-  @RequestMapping("/")
-  @ResponseBody
-  public String index() {
-    return "You made it!";
-  }
-
   // Login form
-  @GetMapping("/login")
+  @GetMapping({"", "/login"})
   public String login() {
     return "login-form";
   }

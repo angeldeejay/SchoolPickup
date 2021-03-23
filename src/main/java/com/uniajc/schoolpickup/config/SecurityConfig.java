@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -45,8 +46,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
     authProvider.setUserDetailsService(userDetailsService());
     authProvider.setPasswordEncoder(passwordEncoder());
-    System.out.println(passwordEncoder().encode("andres72106"));
-
     return authProvider;
   }
 
@@ -58,6 +57,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     System.out.println(PathRequest.toStaticResources().atCommonLocations());
+    String loginPage = "/login";
+    String signupPage = "/signup";
+    String logoutPage = "/logout";
+
     http.csrf()
         .disable() //
         .headers()
@@ -66,6 +69,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     ;
     http.userDetailsService(userDetailsService())
         .authorizeRequests()
+        .antMatchers("/users/", "/users*", "/users**", "/users/*", "/users/*/**")
+        .hasAnyAuthority("ADMIN")
+        .antMatchers("/parents/", "/parents*", "/parents**", "/parents/*", "/parents/*/**")
+        .hasAnyAuthority("ADMIN")
+        .antMatchers("/students/", "/students*", "/students**", "/students/*", "/students/*/**")
+        .hasAnyAuthority("ADMIN", "PARENT")
+        .antMatchers(
+            "/pickup-requests/",
+            "/pickup-requests*",
+            "/pickup-requests**",
+            "/pickup-requests/*",
+            "/pickup-requests/*/**")
+        .hasAnyAuthority("ADMIN", "PARENT")
+        .antMatchers("/", loginPage + "**", signupPage + "**")
+        .permitAll()
         .antMatchers("/resources/**")
         .permitAll()
         .antMatchers("/", "/**", "/javax.faces.resource/**")
@@ -76,73 +94,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .authenticated()
         .and()
         .formLogin()
-        .loginPage("/login")
+        .loginPage(loginPage)
         .permitAll()
-        .failureUrl("/login?error=true")
+        .failureUrl(loginPage + "?error=true")
         .defaultSuccessUrl("/dashboard")
+        .usernameParameter("username")
+        .passwordParameter("password")
         .and()
         .logout()
-        .logoutSuccessUrl("/login");
-
-    // String loginPage = "/login";
-    // String logoutPage = "/logout";
-    // http
-    //        .authorizeRequests()
-    //        .antMatchers("/users/", "/users*", "/users**", "/users/*", "/users/*/**")
-    //        .hasAnyAuthority("ADMIN")
-    //        .antMatchers("/parents/", "/parents*", "/parents**", "/parents/*",
-    // "/parents/*/**")
-    //        .hasAnyAuthority("ADMIN")
-    //        .antMatchers("/students/", "/students*", "/students**", "/students/*",
-    // "/students/*/**")
-    //        .hasAnyAuthority("ADMIN", "PARENT")
-    //        .antMatchers(
-    //            "/pickup-requests/",
-    //            "/pickup-requests*",
-    //            "/pickup-requests**",
-    //            "/pickup-requests/*",
-    //            "/pickup-requests/*/**")
-    //        .hasAnyAuthority("ADMIN", "PARENT")
-    //        .antMatchers("/", "/login**", "/signup**")
-    //        .permitAll()
-    //        .anyRequest()
-    //        .authenticated()
-    //        .and()
-    //        .formLogin()
-    //        .loginPage("/login")
-    //        .failureUrl("/login-error")
-    //        .and()
-    //        .httpBasic()
-    //        .disable();
-    // .authorizeRequests()
-    // .antMatchers("/javax.faces.resource/**")
-    // .permitAll()
-    // .antMatchers("/")
-    // .permitAll()
-    // .antMatchers(loginPage)
-    // .permitAll()
-    // .antMatchers("/registration")
-    // .permitAll()
-    // .antMatchers("/admin/**")
-    // .hasAuthority("ADMIN")
-    // .anyRequest()
-    // .authenticated()
-    // .and()
-    // .csrf()
-    // .disable()
-    // .formLogin()
-    // .loginPage(loginPage)
-    // .failureUrl("/login?error=true")
-    // .defaultSuccessUrl("/admin/home")
-    // .usernameParameter("user_name")
-    // .passwordParameter("password")
-    // .and()
-    // .logout()
-    // .logoutRequestMatcher(new AntPathRequestMatcher(logoutPage))
-    // .logoutSuccessUrl(loginPage)
-    // .and()
-    // .exceptionHandling();
-
+        .logoutRequestMatcher(new AntPathRequestMatcher(logoutPage))
+        .logoutSuccessUrl(loginPage)
+        .and()
+        .httpBasic()
+        .disable()
+        .exceptionHandling();
   }
 
   @Override
