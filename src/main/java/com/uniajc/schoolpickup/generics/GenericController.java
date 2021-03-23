@@ -14,26 +14,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public abstract class GenericController<T> {
 
-    @Autowired
-    HttpServletRequest request;
+  @Autowired HttpServletRequest request;
 
-    public abstract List<T> getAll();
+  public abstract List<T> getAll();
 
-    public abstract Optional<T> getById(Long id);
+  public abstract Optional<T> getById(Long id);
 
-    public abstract T add(T entity);
+  public abstract T add(T entity);
 
-    public abstract void delete(Long id);
+  public abstract void delete(Long id);
 
-    public abstract Optional<T> update(Long id, T entity);
+  public abstract Optional<T> update(Long id, T entity);
 
-    public abstract String test();
+  public abstract String test();
 
-    protected CustomUserDetails getUserDetails() {
-        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();        
-        if (authentication instanceof AnonymousAuthenticationToken) {
-            return null;
-        }
-        return (CustomUserDetails) authentication.getPrincipal();
+  protected CustomUserDetails getUserDetails() {
+    final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (authentication instanceof AnonymousAuthenticationToken) {
+      return null;
     }
+    return (CustomUserDetails) authentication.getPrincipal();
+  }
 }

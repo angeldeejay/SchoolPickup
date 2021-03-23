@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 import com.uniajc.schoolpickup.entities.Parent;
 
 @Repository
-public interface ParentRepository extends JpaRepository<Parent, Long> {
-}
+public interface ParentRepository extends JpaRepository<Parent, Long> {}

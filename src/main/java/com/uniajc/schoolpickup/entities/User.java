@@ -17,61 +17,61 @@ import javax.persistence.Transient;
 @Table(name = "users")
 public class User extends GenericEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id")
+  Long id;
 
-    @Column(name = "email", nullable = false)
-    String email;
+  @Column(name = "email", nullable = false)
+  String email;
 
-    @Column(name = "password", nullable = false)
-    String password;
+  @Column(name = "password", nullable = false)
+  String password;
 
-    @OneToOne
-    @JoinColumn(name = "parent_id", referencedColumnName = "id")
-    Parent parent;
+  @OneToOne
+  @JoinColumn(name = "parent_id", referencedColumnName = "id")
+  Parent parent;
 
-    // Getters & Setters
-    public Long getId() {
-        return id;
-    }
+  // Getters & Setters
+  public Long getId() {
+    return id;
+  }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public String getEmail() {
-        return email;
-    }
+  public String getEmail() {
+    return email;
+  }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
-    public String getPassword() {
-        return password;
-    }
+  public String getPassword() {
+    return password;
+  }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
-    public Parent getParent() {
-        return parent;
-    }
+  public Parent getParent() {
+    return parent;
+  }
 
-    public void setParent(Parent parent) {
-        this.parent = parent;
-    }
+  public void setParent(Parent parent) {
+    this.parent = parent;
+  }
 
-    @Transient
-    public boolean hasParentRole() {
-        return this.parent != null;
-    }
+  @Transient
+  public boolean hasParentRole() {
+    return this.parent != null;
+  }
 
-    @Transient
-    public boolean hasAdminRole() {
-        return this.parent == null;
-    }
+  @Transient
+  public boolean hasAdminRole() {
+    return this.parent == null;
+  }
 }

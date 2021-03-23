@@ -19,50 +19,49 @@ import com.uniajc.schoolpickup.services.ParentService;
 @RequestMapping(value = "/parents")
 public class ParentController extends GenericController<Parent> {
 
-    @Autowired
-    ParentService parentService;
+  @Autowired ParentService parentService;
 
-    // Route: GET /parents
-    @Override
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    public List<Parent> getAll() {
-        return parentService.findAllEntities();
-    }
+  // Route: GET /parents
+  @Override
+  @RequestMapping(value = "", method = RequestMethod.GET)
+  public List<Parent> getAll() {
+    return parentService.findAllEntities();
+  }
 
-    // Route: GET /parents/{id}
-    @Override
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Optional<Parent> getById(@PathVariable Long id) {
-        return parentService.findEntityById(id);
-    }
+  // Route: GET /parents/{id}
+  @Override
+  @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+  public Optional<Parent> getById(@PathVariable Long id) {
+    return parentService.findEntityById(id);
+  }
 
-    // Route: POST /parents
-    @Override
-    @RequestMapping(value = "", method = RequestMethod.POST)
-    @ResponseStatus(value = HttpStatus.CREATED)
-    public Parent add(Parent parent) {
-        return parentService.saveEntity(parent);
-    }
+  // Route: POST /parents
+  @Override
+  @RequestMapping(value = "", method = RequestMethod.POST)
+  @ResponseStatus(value = HttpStatus.CREATED)
+  public Parent add(Parent parent) {
+    return parentService.saveEntity(parent);
+  }
 
-    // Route: DELETE /parents/{id}
-    @Override
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) {
-        parentService.deleteEntity(id);
-    }
+  // Route: DELETE /parents/{id}
+  @Override
+  @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+  @ResponseStatus(value = HttpStatus.NO_CONTENT)
+  public void delete(@PathVariable Long id) {
+    parentService.deleteEntity(id);
+  }
 
-    // Route: PUT /parents/{id}
-    @Override
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Optional<Parent> update(@PathVariable Long id, Parent parent) {
-        return parentService.updateEntity(id, parent);
-    }
+  // Route: PUT /parents/{id}
+  @Override
+  @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+  public Optional<Parent> update(@PathVariable Long id, Parent parent) {
+    return parentService.updateEntity(id, parent);
+  }
 
-    // Route: GET /test
-    @Override
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public String test() {
-        return "Test done";
-    }
+  // Route: GET /test
+  @Override
+  @RequestMapping(value = "/test", method = RequestMethod.GET)
+  public String test() {
+    return "Test done";
+  }
 }

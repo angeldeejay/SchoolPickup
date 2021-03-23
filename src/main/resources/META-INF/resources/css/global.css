@@ -1,0 +1,6 @@
+@import url("/css/reset.css");
+@import url("/css/primeflex.min.css");
+
+body {
+  background-color: #e7edf0;
+}

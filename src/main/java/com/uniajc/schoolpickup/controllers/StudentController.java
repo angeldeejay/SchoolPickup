@@ -19,50 +19,49 @@ import com.uniajc.schoolpickup.services.StudentService;
 @RequestMapping(value = "/students")
 public class StudentController extends GenericController<Student> {
 
-    @Autowired
-    StudentService studentService;
+  @Autowired StudentService studentService;
 
-    // Route: GET /students
-    @Override
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    public List<Student> getAll() {
-        return studentService.findAllEntities();
-    }
+  // Route: GET /students
+  @Override
+  @RequestMapping(value = "", method = RequestMethod.GET)
+  public List<Student> getAll() {
+    return studentService.findAllEntities();
+  }
 
-    // Route: GET /students/{id}
-    @Override
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Optional<Student> getById(@PathVariable Long id) {
-        return studentService.findEntityById(id);
-    }
+  // Route: GET /students/{id}
+  @Override
+  @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+  public Optional<Student> getById(@PathVariable Long id) {
+    return studentService.findEntityById(id);
+  }
 
-    // Route: POST /students
-    @Override
-    @RequestMapping(value = "", method = RequestMethod.POST)
-    @ResponseStatus(value = HttpStatus.CREATED)
-    public Student add(Student student) {
-        return studentService.saveEntity(student);
-    }
+  // Route: POST /students
+  @Override
+  @RequestMapping(value = "", method = RequestMethod.POST)
+  @ResponseStatus(value = HttpStatus.CREATED)
+  public Student add(Student student) {
+    return studentService.saveEntity(student);
+  }
 
-    // Route: DELETE /students/{id}
-    @Override
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) {
-        studentService.deleteEntity(id);
-    }
+  // Route: DELETE /students/{id}
+  @Override
+  @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+  @ResponseStatus(value = HttpStatus.NO_CONTENT)
+  public void delete(@PathVariable Long id) {
+    studentService.deleteEntity(id);
+  }
 
-    // Route: PUT /students/{id}
-    @Override
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Optional<Student> update(@PathVariable Long id, Student student) {
-        return studentService.updateEntity(id, student);
-    }
+  // Route: PUT /students/{id}
+  @Override
+  @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+  public Optional<Student> update(@PathVariable Long id, Student student) {
+    return studentService.updateEntity(id, student);
+  }
 
-    // Route: GET /test
-    @Override
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public String test() {
-        return "Test done";
-    }
+  // Route: GET /test
+  @Override
+  @RequestMapping(value = "/test", method = RequestMethod.GET)
+  public String test() {
+    return "Test done";
+  }
 }

@@ -19,83 +19,83 @@ import javax.persistence.CascadeType;
 @Table(name = "parents")
 public class Parent extends GenericEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id")
+  Long id;
 
-    @Column(name = "first_name", nullable = false)
-    String firstName;
+  @Column(name = "first_name", nullable = false)
+  String firstName;
 
-    @Column(name = "last_name", nullable = false)
-    String lastName;
+  @Column(name = "last_name", nullable = false)
+  String lastName;
 
-    @Column(name = "identification_type", nullable = false)
-    String identificationType;
+  @Column(name = "identification_type", nullable = false)
+  String identificationType;
 
-    @Column(name = "identification_value", nullable = false)
-    String identificationValue;
+  @Column(name = "identification_value", nullable = false)
+  String identificationValue;
 
-    @OneToOne(mappedBy = "parent")
-    private User user;
+  @OneToOne(mappedBy = "parent")
+  private User user;
 
-    @OneToMany(mappedBy="parent", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<Student> students;
+  @OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  private List<Student> students;
 
-    // Getters & Setters
-    public Long getId() {
-        return id;
-    }
+  // Getters & Setters
+  public Long getId() {
+    return id;
+  }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public String getFirstName() {
-        return firstName;
-    }
+  public String getFirstName() {
+    return firstName;
+  }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
 
-    public String getLastName() {
-        return lastName;
-    }
+  public String getLastName() {
+    return lastName;
+  }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
 
-    public String getIdentificationType() {
-        return identificationType;
-    }
+  public String getIdentificationType() {
+    return identificationType;
+  }
 
-    public void setIdentificationType(String identificationType) {
-        this.identificationType = identificationType;
-    }
+  public void setIdentificationType(String identificationType) {
+    this.identificationType = identificationType;
+  }
 
-    public String getIdentificationValue() {
-        return identificationValue;
-    }
+  public String getIdentificationValue() {
+    return identificationValue;
+  }
 
-    public void setIdentificationValue(String identificationValue) {
-        this.identificationValue = identificationValue;
-    }
+  public void setIdentificationValue(String identificationValue) {
+    this.identificationValue = identificationValue;
+  }
 
-    public User getUser() {
-        return user;
-    }
+  public User getUser() {
+    return user;
+  }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+  public void setUser(User user) {
+    this.user = user;
+  }
 
-    public List<Student> getStudents() {
-        return students;
-    }
+  public List<Student> getStudents() {
+    return students;
+  }
 
-    public void setStudents(List<Student> students) {
-        this.students = students;
-    }
+  public void setStudents(List<Student> students) {
+    this.students = students;
+  }
 }

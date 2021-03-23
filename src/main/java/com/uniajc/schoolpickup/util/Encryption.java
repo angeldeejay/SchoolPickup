@@ -9,7 +9,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 public class Encryption {
 
-    public static String encrypt(String value) {
-        return DigestUtils.md5Hex(value).toUpperCase();
-    }
+  public static String encrypt(String value) {
+    return DigestUtils.md5Hex(value).toUpperCase();
+  }
 }

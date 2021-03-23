@@ -13,45 +13,44 @@ import com.uniajc.schoolpickup.repositories.ParentRepository;
 @Service
 public class ParentService extends GenericService<Parent> {
 
-    @Autowired
-    ParentRepository repository;
+  @Autowired ParentRepository repository;
 
-    @Override
-    public List<Parent> findAllEntities() {
-        return repository.findAll();
-    }
+  @Override
+  public List<Parent> findAllEntities() {
+    return repository.findAll();
+  }
 
-    @Override
-    public Optional<Parent> findEntityById(Long id) {
-        return repository.findById(id);
-    }
+  @Override
+  public Optional<Parent> findEntityById(Long id) {
+    return repository.findById(id);
+  }
 
-    @Override
-    public Parent saveEntity(Parent entity) {
-        if (entity != null) {
-            return repository.save(entity);
-        }
-        return new Parent();
+  @Override
+  public Parent saveEntity(Parent entity) {
+    if (entity != null) {
+      return repository.save(entity);
     }
+    return new Parent();
+  }
 
-    @Override
-    public void deleteEntity(Long id) {
-        if (repository.findById(id).isPresent()) {
-            repository.deleteById(id);
-        }
+  @Override
+  public void deleteEntity(Long id) {
+    if (repository.findById(id).isPresent()) {
+      repository.deleteById(id);
     }
+  }
 
-    @Override
-    public Optional<Parent> updateEntity(Long id, Parent data) {
-        Optional<Parent> entity = repository.findById(id);
-        if (entity.isPresent()) {
-            Parent entityTarget = entity.get();
-            entityTarget.setFirstName(data.getFirstName());
-            entityTarget.setLastName(data.getLastName());
-            entityTarget.setIdentificationType(data.getIdentificationType());
-            entityTarget.setIdentificationValue(data.getIdentificationValue());
-            return Optional.of(repository.save(entityTarget));
-        }
-        return Optional.empty();
+  @Override
+  public Optional<Parent> updateEntity(Long id, Parent data) {
+    Optional<Parent> entity = repository.findById(id);
+    if (entity.isPresent()) {
+      Parent entityTarget = entity.get();
+      entityTarget.setFirstName(data.getFirstName());
+      entityTarget.setLastName(data.getLastName());
+      entityTarget.setIdentificationType(data.getIdentificationType());
+      entityTarget.setIdentificationValue(data.getIdentificationValue());
+      return Optional.of(repository.save(entityTarget));
     }
+    return Optional.empty();
+  }
 }

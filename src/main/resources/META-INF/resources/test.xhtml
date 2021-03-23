@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>aaa</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:growl id="messages" />
+
+            <p:menubar>
+                <p:submenu label="File" icon="pi pi-fw pi-file">
+                    <p:submenu label="New" icon="pi pi-fw pi-plus">
+                        <p:menuitem value="Bookmark" icon="pi pi-fw pi-bookmark" />
+                        <p:menuitem value="Video" icon="pi pi-fw pi-video" />
+                    </p:submenu>
+                    <p:menuitem value="Delete" icon="pi pi-fw pi-trash" />
+                    <p:divider />
+                    <p:menuitem value="Export" icon="pi pi-fw pi-external-link" />
+                </p:submenu>
+
+                <p:submenu label="Edit" icon="pi pi-fw pi-pencil">
+                    <p:menuitem value="Left" icon="pi pi-fw pi-align-left" />
+                    <p:menuitem value="Right" icon="pi pi-fw pi-align-right" />
+                    <p:menuitem value="Center" icon="pi pi-fw pi-align-center" />
+                    <p:menuitem value="Justify" icon="pi pi-fw pi-align-justify" />
+                </p:submenu>
+
+                <p:submenu label="Users" icon="pi pi-fw pi-user">
+                    <p:menuitem value="New" icon="pi pi-fw pi-user-plus" />
+                    <p:menuitem value="Delete" icon="pi pi-fw pi-user-minus" />
+                    <p:submenu label="Search" icon="pi pi-fw pi-users">
+                        <p:submenu label="Filter" icon="pi pi-fw pi-filter">
+                            <p:menuitem value="Print" icon="pi pi-fw pi-print" />
+                        </p:submenu>
+                        <p:menuitem value="List" icon="pi pi-fw pi-bars" />
+                    </p:submenu>
+                </p:submenu>
+
+                <p:submenu label="Events" icon="pi pi-fw pi-calendar">
+                    <p:submenu label="Edit" icon="pi pi-fw pi-pencil">
+                        <p:menuitem value="Save" icon="pi pi-fw pi-calendar-plus" />
+                        <p:menuitem value="Delete" icon="pi pi-fw pi-calendar-minus" />
+                    </p:submenu>
+                    <p:submenu label="Archieve" icon="pi pi-fw pi-calendar-times">
+                        <p:menuitem value="Remove" icon="pi pi-fw pi-calendar-minus" />
+                    </p:submenu>
+                </p:submenu>
+
+                <p:divider layout="vertical" />
+
+                <p:menuitem value="Quit" icon="pi pi-fw pi-power-off" />
+
+                <f:facet name="options">
+                    <div class="ui-input-icon-left p-mr-2">
+                        <i class="pi pi-fw pi-search" />
+                        <p:inputText placeholder="Search" />
+                    </div>
+                    <p:button value="Logout" icon="pi pi-fw pi-sign-out"
+                              styleClass="ui-button-info" />
+                </f:facet>
+            </p:menubar>
+        </h:form>
+        <main class="container">
+            <h:form>
+                <p:breadCrumb>
+                    <p:menuitem value="Electronics" />
+                    <p:menuitem value="Computer" />
+                    <p:menuitem value="Notebook" />
+                    <p:menuitem value="Accessories" />
+                    <p:menuitem value="Backpacks" />
+                    <p:menuitem value="Item" />
+                </p:breadCrumb>
+            </h:form>
+            <div class="starter-template text-center py-5 px-3">
+                <h1>Bootstrap starter template</h1>
+                <p class="lead">
+                    Use this document as a way to quickly start any new project.
+                    <h:outputText value="&lt;br/&gt;" escape="false" />
+                    All you get is this text and a mostly barebones HTML document.
+                </p>
+                <p:card style="width: 25em">
+                    <f:facet name="header">
+                        <img alt="user header"
+                             src="//www.primefaces.org/showcase/resources/demo/images/usercard.png" />
+                    </f:facet>
+                    <f:facet name="title">aaa</f:facet>
+                    <f:facet name="subtitle">aaa</f:facet>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Inventore sed consequuntur error repudiandae numquam deserunt
+                        quisquam repellat libero asperiores earum nam nobis, culpa ratione
+                        quam perferendis esse, cupiditate neque quas!</p>
+                    <f:facet name="footer">
+                        <p:commandButton icon="pi pi-check" value="Save" />
+                        <p:commandButton icon="pi pi-times" value="Cancel" />
+                    </f:facet>
+                </p:card>
+            </div>
+        </main>
+    </h:body>
+
+</html>

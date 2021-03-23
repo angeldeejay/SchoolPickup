@@ -1,0 +1,32 @@
+@import url("/css/global.css");
+
+.login-container {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.login-card {
+  flex: 1;
+  width: 400px;
+  overflow: hidden;
+}
+
+.login-card .ui-card-title,
+.login-card .ui-card-subtitle {
+  text-align: center;
+}
+
+.login-card .ui-card-content {
+  padding-bottom: 0 !important;
+}
+
+.login-card .ui-card-content label {
+  font-weight: bold;
+}
+
+.login-card .ui-card-footer {
+  padding-top: 0 !important;
+}

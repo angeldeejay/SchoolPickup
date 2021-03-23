@@ -19,50 +19,49 @@ import com.uniajc.schoolpickup.services.PickupRequestService;
 @RequestMapping(value = "/pickup-requests")
 public class PickupRequestController extends GenericController<PickupRequest> {
 
-    @Autowired
-    PickupRequestService pickupRequestService;
+  @Autowired PickupRequestService pickupRequestService;
 
-    // Route: GET /pickup-requests
-    @Override
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    public List<PickupRequest> getAll() {
-        return pickupRequestService.findAllEntities();
-    }
+  // Route: GET /pickup-requests
+  @Override
+  @RequestMapping(value = "", method = RequestMethod.GET)
+  public List<PickupRequest> getAll() {
+    return pickupRequestService.findAllEntities();
+  }
 
-    // Route: GET /pickup-requests/{id}
-    @Override
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Optional<PickupRequest> getById(@PathVariable Long id) {
-        return pickupRequestService.findEntityById(id);
-    }
+  // Route: GET /pickup-requests/{id}
+  @Override
+  @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+  public Optional<PickupRequest> getById(@PathVariable Long id) {
+    return pickupRequestService.findEntityById(id);
+  }
 
-    // Route: POST /pickup-requests
-    @Override
-    @RequestMapping(value = "", method = RequestMethod.POST)
-    @ResponseStatus(value = HttpStatus.CREATED)
-    public PickupRequest add(PickupRequest pickupRequest) {
-        return pickupRequestService.saveEntity(pickupRequest);
-    }
+  // Route: POST /pickup-requests
+  @Override
+  @RequestMapping(value = "", method = RequestMethod.POST)
+  @ResponseStatus(value = HttpStatus.CREATED)
+  public PickupRequest add(PickupRequest pickupRequest) {
+    return pickupRequestService.saveEntity(pickupRequest);
+  }
 
-    // Route: DELETE /pickup-requests/{id}
-    @Override
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) {
-        pickupRequestService.deleteEntity(id);
-    }
+  // Route: DELETE /pickup-requests/{id}
+  @Override
+  @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+  @ResponseStatus(value = HttpStatus.NO_CONTENT)
+  public void delete(@PathVariable Long id) {
+    pickupRequestService.deleteEntity(id);
+  }
 
-    // Route: PUT /pickup-requests/{id}
-    @Override
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Optional<PickupRequest> update(@PathVariable Long id, PickupRequest pickupRequest) {
-        return pickupRequestService.updateEntity(id, pickupRequest);
-    }
+  // Route: PUT /pickup-requests/{id}
+  @Override
+  @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+  public Optional<PickupRequest> update(@PathVariable Long id, PickupRequest pickupRequest) {
+    return pickupRequestService.updateEntity(id, pickupRequest);
+  }
 
-    // Route: GET /test
-    @Override
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public String test() {
-        return "Test done";
-    }
+  // Route: GET /test
+  @Override
+  @RequestMapping(value = "/test", method = RequestMethod.GET)
+  public String test() {
+    return "Test done";
+  }
 }

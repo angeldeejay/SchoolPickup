@@ -17,52 +17,52 @@ import javax.persistence.Transient;
 @Table(name = "pickup_requests")
 public class PickupRequest extends GenericEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id")
+  Long id;
 
-    @Column(name = "slot", nullable = false)
-    Integer slot;
+  @Column(name = "slot", nullable = false)
+  Integer slot;
 
-    @OneToOne
-    @JoinColumn(name = "parent_id", referencedColumnName = "id")
-    Parent parent;
+  @OneToOne
+  @JoinColumn(name = "parent_id", referencedColumnName = "id")
+  Parent parent;
 
-    @OneToOne
-    @JoinColumn(name = "student_id", referencedColumnName = "id")
-    Student student;
+  @OneToOne
+  @JoinColumn(name = "student_id", referencedColumnName = "id")
+  Student student;
 
-    // Getters & Setters
-    public Long getId() {
-        return id;
-    }
+  // Getters & Setters
+  public Long getId() {
+    return id;
+  }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public Integer getSlot() {
-        return slot;
-    }
+  public Integer getSlot() {
+    return slot;
+  }
 
-    public void setSlot(Integer slot) {
-        this.slot = slot;
-    }
+  public void setSlot(Integer slot) {
+    this.slot = slot;
+  }
 
-    public Parent getParent() {
-        return parent;
-    }
+  public Parent getParent() {
+    return parent;
+  }
 
-    public void setParent(Parent parent) {
-        this.parent = parent;
-    }
+  public void setParent(Parent parent) {
+    this.parent = parent;
+  }
 
-    public Student getStudent() {
-        return student;
-    }
+  public Student getStudent() {
+    return student;
+  }
 
-    public void setStudent(Student student) {
-        this.student = student;
-    }
+  public void setStudent(Student student) {
+    this.student = student;
+  }
 }

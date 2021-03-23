@@ -13,44 +13,43 @@ import com.uniajc.schoolpickup.repositories.StudentRepository;
 @Service
 public class StudentService extends GenericService<Student> {
 
-    @Autowired
-    StudentRepository repository;
+  @Autowired StudentRepository repository;
 
-    @Override
-    public List<Student> findAllEntities() {
-        return repository.findAll();
-    }
+  @Override
+  public List<Student> findAllEntities() {
+    return repository.findAll();
+  }
 
-    @Override
-    public Optional<Student> findEntityById(Long id) {
-        return repository.findById(id);
-    }
+  @Override
+  public Optional<Student> findEntityById(Long id) {
+    return repository.findById(id);
+  }
 
-    @Override
-    public Student saveEntity(Student entity) {
-        if (entity != null) {
-            return repository.save(entity);
-        }
-        return new Student();
+  @Override
+  public Student saveEntity(Student entity) {
+    if (entity != null) {
+      return repository.save(entity);
     }
+    return new Student();
+  }
 
-    @Override
-    public void deleteEntity(Long id) {
-        if (repository.findById(id).isPresent()) {
-            repository.deleteById(id);
-        }
+  @Override
+  public void deleteEntity(Long id) {
+    if (repository.findById(id).isPresent()) {
+      repository.deleteById(id);
     }
+  }
 
-    @Override
-    public Optional<Student> updateEntity(Long id, Student data) {
-        Optional<Student> entity = repository.findById(id);
-        if (entity.isPresent()) {
-            Student entityTarget = entity.get();
-            entityTarget.setFirstName(data.getFirstName());
-            entityTarget.setLastName(data.getLastName());
-            entityTarget.setParent(data.getParent());
-            return Optional.of(repository.save(entityTarget));
-        }
-        return Optional.empty();
+  @Override
+  public Optional<Student> updateEntity(Long id, Student data) {
+    Optional<Student> entity = repository.findById(id);
+    if (entity.isPresent()) {
+      Student entityTarget = entity.get();
+      entityTarget.setFirstName(data.getFirstName());
+      entityTarget.setLastName(data.getLastName());
+      entityTarget.setParent(data.getParent());
+      return Optional.of(repository.save(entityTarget));
     }
+    return Optional.empty();
+  }
 }

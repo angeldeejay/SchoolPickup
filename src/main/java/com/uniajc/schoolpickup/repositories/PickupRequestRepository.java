@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository;
 import com.uniajc.schoolpickup.entities.PickupRequest;
 
 @Repository
-public interface PickupRequestRepository extends JpaRepository<PickupRequest, Long> {
-}
+public interface PickupRequestRepository extends JpaRepository<PickupRequest, Long> {}
