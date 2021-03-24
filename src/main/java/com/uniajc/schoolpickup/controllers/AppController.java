@@ -1,11 +1,11 @@
 package com.uniajc.schoolpickup.controllers;
 
 import com.uniajc.schoolpickup.entities.User;
-import java.util.List;
-
 import com.uniajc.schoolpickup.repositories.UserRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +19,21 @@ public class AppController {
 
   @Autowired private UserRepository repository;
 
+  private boolean isAuthenticated() {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (authentication == null
+        || AnonymousAuthenticationToken.class.isAssignableFrom(authentication.getClass())) {
+      return false;
+    }
+    return authentication.isAuthenticated();
+  }
+
   // Login form
-  @GetMapping({"", "/login"})
+  @GetMapping({"/", "/login"})
   public String login() {
+	if (isAuthenticated()) {
+        return "redirect:dashboard";
+    }
     return "login-form";
   }
 
@@ -57,10 +69,8 @@ public class AppController {
   }
 
   @GetMapping("/dashboard")
-  public String viewDashboard(Model model) {
-    List<User> users = repository.findAll();
-    model.addAttribute("users", users);
-
+  public String viewDashboard(Authentication authentication) {
+    System.out.println(authentication);
     return "dashboard";
   }
 }

@@ -1,46 +1,47 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-  xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
-<h:head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <h:outputStylesheet name="/css/login.css" />
-  <title>Iniciar Sesión</title>
-</h:head>
-<h:body>
-  <h:form>
-    <p:growl id="messages" />
-    <main class="login-container p-d-flex">
-      <div class="starter-template text-center py-5 px-3">
-        <p:card class="login-card">
-          <f:facet name="header">
-            <h:graphicImage name="/images/login-banner.jpg" />
-          </f:facet>
-          <f:facet name="title">Iniciar Sesión</f:facet>
-          <f:facet name="subtitle">Recogida de Estudiantes</f:facet>
-          <div class="ui-fluid">
-            <div class="p-field p-grid">
-              <h:outputLabel value="Correo electrónico" for="username" class="p-col-12 p-mb-4 p-md-4 p-mb-md-0" />
-              <div class="p-col-12 p-md-8">
-                <p:inputText id="username" placeholder="Digite su correo electrónico" />
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
+  <h:head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <h:outputStylesheet name="/css/login.css" />
+    <title>Iniciar Sesión</title>
+  </h:head>
+  <h:body>
+    <form action="/login" method="post">
+      <p:growl id="messages" />
+      <main class="login-container p-d-flex">
+        <div class="starter-template text-center py-5 px-3">
+          <p:card class="login-card">
+            <f:facet name="header">
+              <h:graphicImage name="/images/login-banner.jpg" />
+            </f:facet>
+            <f:facet name="title">Iniciar Sesión</f:facet>
+            <f:facet name="subtitle">Recogida de Estudiantes</f:facet>
+            <div class="ui-fluid">
+              <div class="p-field p-grid">
+                <h:outputLabel value="Correo electrónico" for="username" class="p-col-12 p-mb-4 p-md-4 p-mb-md-0" />
+                <div class="p-col-12 p-md-8">
+                  <p:inputText id="username" placeholder="Digite su correo electrónico" />
+                </div>
+              </div>
+              <div class="p-field p-grid">
+                <h:outputLabel value="Contraseña" for="password" class="p-col-12 p-mb-4 p-md-4 p-mb-md-0" />
+                <div class="p-col-12 p-md-8">
+                  <p:password id="password" placeholder="Digite su contraseña" />
+                </div>
               </div>
             </div>
-            <div class="p-field p-grid">
-              <h:outputLabel value="Contraseña" for="password" class="p-col-12 p-mb-4 p-md-4 p-mb-md-0" />
-              <div class="p-col-12 p-md-8">
-                <p:password id="password" placeholder="Digite su contraseña" />
-              </div>
-            </div>
-          </div>
-          <f:facet name="footer">
-            <p:commandButton class="p-col-12" value="Ingresar" ajax="true"
-              action="#{appController.loginProcess(user)}" />
-          </f:facet>
-        </p:card>
-      </div>
-    </main>
-  </h:form>
-</h:body>
+            <f:facet name="footer">
+              <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only p-col-12" type="submit">
+                <span class="ui-button-text ui-c">Ingresar</span>
+              </button>
+            </f:facet>
+          </p:card>
+        </div>
+      </main>
+    </form>
+  </h:body>
 
 </html>

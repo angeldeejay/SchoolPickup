@@ -1,10 +1,9 @@
 package com.uniajc.schoolpickup.util;
 
-import java.io.IOException;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 
 public class JsonUtil {
 

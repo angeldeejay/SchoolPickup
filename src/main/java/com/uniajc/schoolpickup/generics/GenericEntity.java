@@ -1,9 +1,8 @@
 package com.uniajc.schoolpickup.generics;
 
 import static com.uniajc.schoolpickup.util.Inflector.pascalize;
-import static java.lang.String.join;
-
 import java.io.Serializable;
+import static java.lang.String.join;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

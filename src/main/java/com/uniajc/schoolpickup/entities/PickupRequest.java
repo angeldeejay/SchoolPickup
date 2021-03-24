@@ -1,16 +1,14 @@
 package com.uniajc.schoolpickup.entities;
 
+import com.uniajc.schoolpickup.generics.GenericEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.OneToOne;
 import javax.persistence.JoinColumn;
-
-import com.uniajc.schoolpickup.generics.GenericEntity;
-import javax.persistence.Transient;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @SuppressWarnings("serial")
 @Entity

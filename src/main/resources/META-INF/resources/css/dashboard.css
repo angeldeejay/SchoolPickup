@@ -1,0 +1,50 @@
+@import url('/css/global.css');
+
+body {
+  overflow: hidden;
+  display: flex;
+  box-sizing: border-box;
+  height: 100vh;
+  max-height: 100vh;
+  min-height: 100vh;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  max-height: 100vh;
+  min-height: 100vh;
+}
+
+.flex-item:not(:last-child) {
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.flex-item:last-child {
+  box-sizing: border-box;
+  flex-grow: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.top-bar > .ui-menu-list {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  align-content: space-between;
+}
+
+.top-bar > .ui-menu-list > .ui-menuitem {
+  display: inline-flex !important;
+}
+
+.top-bar > .ui-menu-list > .ui-divider {
+  flex-grow: 1;
+}
+
+.top-bar > .ui-menu-list > .ui-divider:before {
+  display: none !important;
+}

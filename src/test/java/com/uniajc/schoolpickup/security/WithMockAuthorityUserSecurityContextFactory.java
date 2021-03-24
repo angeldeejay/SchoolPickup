@@ -7,7 +7,6 @@ package com.uniajc.schoolpickup.security;
 
 import com.uniajc.schoolpickup.entities.User;
 import com.uniajc.schoolpickup.util.Mocker;
-
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -28,7 +27,7 @@ class WithMockAuthorityUserSecurityContextFactory
         authentication = getParentAuthentication();
         break;
     }
-    SecurityContext context = SecurityContextHolder.createEmptyContext();
+    SecurityContext context = SecurityContextHolder.getContext();
     context.setAuthentication(authentication);
     return context;
   }

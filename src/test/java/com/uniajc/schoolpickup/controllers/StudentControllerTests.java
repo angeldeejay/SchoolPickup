@@ -2,13 +2,16 @@ package com.uniajc.schoolpickup.controllers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.uniajc.schoolpickup.entities.Student;
+import com.uniajc.schoolpickup.security.WithMockAuthorityUser;
 import com.uniajc.schoolpickup.services.StudentService;
 import com.uniajc.schoolpickup.util.JsonUtil;
 import com.uniajc.schoolpickup.util.Mocker;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import javax.servlet.Filter;
 import static org.junit.Assert.assertTrue;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.mockito.ArgumentMatchers.isA;
@@ -28,16 +31,27 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import com.uniajc.schoolpickup.security.WithMockAuthorityUser;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class StudentControllerTests {
 
-  @Autowired private MockMvc mockMvc;
-
   @MockBean private StudentService studentService;
+
+  @Autowired private WebApplicationContext context;
+
+  @Autowired private Filter springSecurityFilterChain;
+
+  private MockMvc mockMvc;
+
+  @Before
+  public void setup() {
+    this.mockMvc =
+        MockMvcBuilders.webAppContextSetup(context).addFilters(springSecurityFilterChain).build();
+  }
 
   @Test
   @WithMockAuthorityUser("admin")
@@ -107,7 +121,7 @@ public class StudentControllerTests {
             .perform( //
                 get("/students") //
                     .contentType(MediaType.APPLICATION_JSON)) //
-            .andExpect(status().isUnauthorized()) //
+            .andExpect(status().is3xxRedirection()) //
             .andReturn();
   }
 
@@ -173,7 +187,7 @@ public class StudentControllerTests {
             .perform( //
                 get("/students/1") //
                     .contentType(MediaType.APPLICATION_JSON)) //
-            .andExpect(status().isUnauthorized()) //
+            .andExpect(status().is3xxRedirection()) //
             .andReturn();
   }
 
@@ -241,7 +255,7 @@ public class StudentControllerTests {
                 post("/students") //
                     .contentType(MediaType.APPLICATION_JSON) //
                     .content(JsonUtil.toJson(student))) //
-            .andExpect(status().isUnauthorized()) //
+            .andExpect(status().is3xxRedirection()) //
             .andReturn();
   }
 
@@ -285,7 +299,7 @@ public class StudentControllerTests {
         .perform( //
             delete("/students/1") //
                 .contentType(MediaType.APPLICATION_JSON)) //
-        .andExpect(status().isUnauthorized()) //
+        .andExpect(status().is3xxRedirection()) //
         .andReturn();
   }
 
@@ -357,7 +371,7 @@ public class StudentControllerTests {
                 put("/students/" + student.getId().toString()) //
                     .contentType(MediaType.APPLICATION_JSON) //
                     .content(JsonUtil.toJson(student))) //
-            .andExpect(status().isUnauthorized()) //
+            .andExpect(status().is3xxRedirection()) //
             .andReturn();
   }
 }

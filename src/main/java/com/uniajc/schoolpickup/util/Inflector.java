@@ -37,17 +37,16 @@ import static com.uniajc.schoolpickup.util.Inflector.CharType.UPPER;
 import static com.uniajc.schoolpickup.util.Inflector.CharType.WHITESPACE;
 import static java.lang.Character.toUpperCase;
 import static java.lang.String.join;
-import static java.util.Locale.US;
-import static java.util.regex.Pattern.compile;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import static java.util.Locale.US;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import static java.util.regex.Pattern.compile;
 
 /**
  * a port of the excellent Inflector class in ruby's ActiveSupport library

@@ -2,8 +2,6 @@ package com.uniajc.schoolpickup.security;
 
 import com.uniajc.schoolpickup.entities.User;
 import com.uniajc.schoolpickup.repositories.UserRepository;
-import com.uniajc.schoolpickup.security.CustomUserDetails;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -2,7 +2,6 @@ package com.uniajc.schoolpickup.config;
 
 import com.uniajc.schoolpickup.security.CustomUserDetailsService;
 import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -24,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired private DataSource dataSource;
 
-  @Bean({"customUserDetailsService", "customUserDetailsService"})
+  @Bean({"customUserDetailsService", "userDetailsService"})
   @Override
   public UserDetailsService userDetailsService() {
     return new CustomUserDetailsService();
@@ -58,7 +57,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     System.out.println(PathRequest.toStaticResources().atCommonLocations());
     String loginPage = "/login";
-    String signupPage = "/signup";
     String logoutPage = "/logout";
 
     http.csrf()
@@ -70,23 +68,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     http.userDetailsService(userDetailsService())
         .authorizeRequests()
         .antMatchers("/users/", "/users*", "/users**", "/users/*", "/users/*/**")
-        .hasAnyAuthority("ADMIN")
+        .hasAuthority("ADMIN")
         .antMatchers("/parents/", "/parents*", "/parents**", "/parents/*", "/parents/*/**")
-        .hasAnyAuthority("ADMIN")
-        .antMatchers("/students/", "/students*", "/students**", "/students/*", "/students/*/**")
-        .hasAnyAuthority("ADMIN", "PARENT")
+        .hasAuthority("ADMIN")
         .antMatchers(
+            "/dashboard/",
+            "/dashboard*",
+            "/dashboard**",
+            "/dashboard/*",
+            "/dashboard/*/**",
+            "/students/",
+            "/students*",
+            "/students**",
+            "/students/*",
+            "/students/*/**",
             "/pickup-requests/",
             "/pickup-requests*",
             "/pickup-requests**",
             "/pickup-requests/*",
             "/pickup-requests/*/**")
         .hasAnyAuthority("ADMIN", "PARENT")
-        .antMatchers("/", loginPage + "**", signupPage + "**")
-        .permitAll()
-        .antMatchers("/resources/**")
-        .permitAll()
-        .antMatchers("/", "/**", "/javax.faces.resource/**")
+        .antMatchers("/", loginPage + "**")
+		.not()
+        .authenticated()
+        .antMatchers("/resources/**","/**", "/javax.faces.resource/**")
         .permitAll()
         .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
         .permitAll()
@@ -95,6 +100,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
         .formLogin()
         .loginPage(loginPage)
+        .loginProcessingUrl(loginPage)
         .permitAll()
         .failureUrl(loginPage + "?error=true")
         .defaultSuccessUrl("/dashboard")

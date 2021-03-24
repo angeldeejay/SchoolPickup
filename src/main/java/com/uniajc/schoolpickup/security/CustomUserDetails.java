@@ -1,15 +1,14 @@
 package com.uniajc.schoolpickup.security;
 
 import com.uniajc.schoolpickup.entities.Parent;
-import java.util.Collection;
-
 import com.uniajc.schoolpickup.entities.User;
 import java.util.ArrayList;
-
+import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+@SuppressWarnings("unchecked")
 public class CustomUserDetails extends org.springframework.security.core.userdetails.User
     implements UserDetails {
 

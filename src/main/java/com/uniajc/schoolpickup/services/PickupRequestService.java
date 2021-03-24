@@ -1,15 +1,12 @@
 package com.uniajc.schoolpickup.services;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.uniajc.schoolpickup.entities.PickupRequest;
 import com.uniajc.schoolpickup.generics.GenericService;
 import com.uniajc.schoolpickup.repositories.PickupRequestRepository;
-import com.uniajc.schoolpickup.util.Encryption;
+import java.util.List;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class PickupRequestService extends GenericService<PickupRequest> {
