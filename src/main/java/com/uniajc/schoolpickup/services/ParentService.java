@@ -43,10 +43,8 @@ public class ParentService extends GenericService<Parent> {
     Optional<Parent> entity = repository.findById(id);
     if (entity.isPresent()) {
       Parent entityTarget = entity.get();
-      entityTarget.setFirstName(data.getFirstName());
-      entityTarget.setLastName(data.getLastName());
-      entityTarget.setIdentificationType(data.getIdentificationType());
-      entityTarget.setIdentificationValue(data.getIdentificationValue());
+      entityTarget.setEmail(data.getEmail());
+      entityTarget.setUser(data.getUser());
       return Optional.of(repository.save(entityTarget));
     }
     return Optional.empty();

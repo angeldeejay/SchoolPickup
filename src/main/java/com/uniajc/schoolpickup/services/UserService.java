@@ -43,15 +43,16 @@ public class UserService extends GenericService<User> {
     Optional<User> entity = repository.findById(id);
     if (entity.isPresent()) {
       User entityTarget = entity.get();
-      entityTarget.setEmail(data.getEmail());
+      entityTarget.setFirstName(data.getFirstName());
+      entityTarget.setLastName(data.getLastName());
+      entityTarget.setIdentification(data.getIdentification());
       entityTarget.setPassword(data.getPassword());
-      entityTarget.setParent(data.getParent());
       return Optional.of(repository.save(entityTarget));
     }
     return Optional.empty();
   }
 
-  public User findEntityByEmail(String email) {
-    return repository.findByEmail(email);
+  public User findEntityByIdentification(String identification) {
+    return repository.findByIdentification(identification);
   }
 }

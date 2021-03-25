@@ -3,7 +3,7 @@ package com.uniajc.schoolpickup.generics;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class GenericController<T> {
+public interface EntityController<T> {
   public abstract List<T> getAll();
 
   public abstract Optional<T> getById(Long id);

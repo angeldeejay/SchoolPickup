@@ -50,4 +50,8 @@ public class PickupRequestService extends GenericService<PickupRequest> {
     }
     return Optional.empty();
   }
+
+  public List<PickupRequest> findPending() {
+    return repository.findPendingRequests();
+  }
 }

@@ -1,8 +1,10 @@
 package com.uniajc.schoolpickup.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.uniajc.schoolpickup.generics.GenericEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,9 +28,13 @@ public class Student extends GenericEntity {
   @Column(name = "last_name", nullable = false)
   String lastName;
 
-  @ManyToOne(optional = false)
+  @JsonBackReference
+  @ManyToOne(optional = false, fetch = FetchType.EAGER)
   @JoinColumn(name = "parent_id", nullable = false)
   private Parent parent;
+
+  @Column(name = "level", nullable = false)
+  private String level;
 
   // Getters & Setters
   public Long getId() {
@@ -61,5 +67,13 @@ public class Student extends GenericEntity {
 
   public void setParent(Parent parent) {
     this.parent = parent;
+  }
+
+  public String getLevel() {
+    return level;
+  }
+
+  public void setLevel(String level) {
+    this.level = level;
   }
 }

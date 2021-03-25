@@ -1,5 +1,3 @@
-@import url('/css/global.css');
-
 body {
   overflow: hidden;
   display: flex;
@@ -47,4 +45,65 @@ body {
 
 .top-bar > .ui-menu-list > .ui-divider:before {
   display: none !important;
+}
+
+.top-bar a.active {
+  background: #607D8B !important;
+}
+
+.top-bar a.active > span {
+  color: #ffffff !important;
+}
+
+.navbar-wrapper .ui-menubar,
+.breadcrumb-wrapper .ui-breadcrumb {
+  border-top-width: 0 !important;
+  border-left-width: 0 !important;
+  border-right-width: 0 !important;
+}
+
+.content-wrapper {
+  padding: 1rem;
+}
+
+.content-wrapper:before {
+  content: '';
+  background-image: url('/images/logo.png');
+  width: 128px;
+  height: 128px;
+  opacity: 0.15;
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.pending-pickup-requests-container,
+.pending-pickup-requests {
+  height: 100%;
+}
+
+.pending-pickup-requests .level-panel .ui-panel-content {
+  display: none;
+}
+
+.pending-pickup-requests .p-col > .flex-container,
+.pending-pickup-requests .p-col > .flex-container > .flex-item:last-child {
+  height: 85vh;
+  max-height: 85vh;
+  min-height: unset;
+}
+
+.pickup-card {
+  margin: 1rem;
+}
+
+.pickup-card:last-child {
+  margin-bottom: 0;
+}
+
+.pickup-card .ui-card-content {
+  display: none;
+  margin-bottom: 1rem;
 }

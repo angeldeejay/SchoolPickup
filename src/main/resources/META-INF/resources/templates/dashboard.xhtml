@@ -1,0 +1,19 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" 
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui">
+  <h:body>
+    <ui:composition>
+      <div class="layout-wrapper flex-container">
+        <ui:include src="/templates/layout/topbar.xhtml" />
+        <ui:include src="/templates/layout/breadcrumbs.xhtml" />
+        <div class="content-wrapper flex-item p-m-0 p-p-3">
+          <ui:insert name="innerContent" />
+        </div>
+      </div>
+    </ui:composition>
+  </h:body>
+</html>

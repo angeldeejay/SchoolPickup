@@ -1,14 +1,19 @@
 package com.uniajc.schoolpickup.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.uniajc.schoolpickup.generics.GenericEntity;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @SuppressWarnings("serial")
 @Entity
@@ -23,13 +28,24 @@ public class PickupRequest extends GenericEntity {
   @Column(name = "slot", nullable = false)
   Integer slot;
 
-  @OneToOne
+  @JsonManagedReference
+  @OneToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "parent_id", referencedColumnName = "id")
   Parent parent;
 
-  @OneToOne
+  @JsonManagedReference
+  @OneToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "student_id", referencedColumnName = "id")
   Student student;
+
+  @JsonManagedReference
+  @OneToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "user_id", referencedColumnName = "id")
+  User user;
+
+  @Column(name = "picked_up_at")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date pickedUpAt;
 
   // Getters & Setters
   public Long getId() {
@@ -62,5 +78,21 @@ public class PickupRequest extends GenericEntity {
 
   public void setStudent(Student student) {
     this.student = student;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
+
+  public Date getPickedUpAt() {
+    return pickedUpAt;
+  }
+
+  public void setPickedUpAt(Date pickedUpAt) {
+    this.pickedUpAt = pickedUpAt;
   }
 }

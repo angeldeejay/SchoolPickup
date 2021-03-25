@@ -55,8 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    System.out.println(PathRequest.toStaticResources().atCommonLocations());
     String loginPage = "/login";
+    String registerPage = "/register";
     String logoutPage = "/logout";
 
     http.csrf()
@@ -88,10 +88,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/pickup-requests/*",
             "/pickup-requests/*/**")
         .hasAnyAuthority("ADMIN", "PARENT")
-        .antMatchers("/", loginPage + "**")
-		.not()
-        .authenticated()
-        .antMatchers("/resources/**","/**", "/javax.faces.resource/**")
+        .antMatchers("/", loginPage + "**", registerPage + "**")
+        .permitAll()
+        .antMatchers("/resources/**", "/**", "/javax.faces.resource/**")
         .permitAll()
         .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
         .permitAll()
@@ -104,7 +103,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .permitAll()
         .failureUrl(loginPage + "?error=true")
         .defaultSuccessUrl("/dashboard")
-        .usernameParameter("username")
+        .usernameParameter("username_hinput")
         .passwordParameter("password")
         .and()
         .logout()

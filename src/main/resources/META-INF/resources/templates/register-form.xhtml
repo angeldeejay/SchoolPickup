@@ -1,0 +1,85 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" 
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui">
+  <h:body>
+    <ui:composition>
+      <main class="register-container p-d-flex">
+        <div class="starter-template text-center py-5 px-3">
+          <h:form>
+            <p:card class="register-card">
+              <f:facet name="title">Registro de pariente</f:facet>
+              <f:facet name="subtitle">Recogida de Estudiantes</f:facet>
+              <div name="content">
+                <p:messages id="messages" showDetail="false" class="register-messages" closable="true">
+                  <p:autoUpdate/>
+                </p:messages>
+                <div class="ui-fluid">
+                  <div class="p-field p-grid">
+                    <h:outputLabel value="Nombres" for="@next" class="p-col-12 p-mb-4 p-md-4 p-mb-md-0" />
+                    <div class="p-col-12 p-md-8">
+                      <p:inputText placeholder="Digite su nombre" value="#{userRegisterBean.user.firstName}"
+                                   required="true" 
+                                   requiredMessage="Digite su nombre"
+                                   />
+                    </div>
+                  </div>
+                  <div class="p-field p-grid">
+                    <h:outputLabel value="Apellidos" for="@next" class="p-col-12 p-mb-4 p-md-4 p-mb-md-0" />
+                    <div class="p-col-12 p-md-8">
+                      <p:inputText placeholder="Digite su apellido" value="#{userRegisterBean.user.lastName}"
+                                   required="true" 
+                                   requiredMessage="Digite su apellido"
+                                   />
+                    </div>
+                  </div>
+                  <div class="p-field p-grid">
+                    <h:outputLabel value="Número de documento" for="@next" class="p-col-12 p-mb-4 p-md-4 p-mb-md-0" />
+                    <div class="p-col-12 p-md-8">
+                      <p:inputNumber placeholder="Digite su número de documento" value="#{userRegisterBean.user.identification}" decimalPlaces="0"
+                                     required="true" 
+                                     requiredMessage="Número de documento inválido"
+                                     />
+                    </div>
+                  </div>
+                  <div class="p-field p-grid">
+                    <h:outputLabel value="Correo electrónico" for="@next" class="p-col-12 p-mb-4 p-md-4 p-mb-md-0" />
+                    <div class="p-col-12 p-md-8">
+                      <p:inputText placeholder="Digite su correo electrónico" 
+                                   required="true" 
+                                   requiredMessage="Correo electrónico inválido"
+                                   validatorMessage="Correo electrónico inválido"
+                                   value="#{userRegisterBean.parent.email}">
+                        <f:validateRegex
+                          pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                      </p:inputText>
+                    </div>
+                  </div>
+                  <div class="p-field p-grid">
+                    <h:outputLabel value="Contraseña" for="@next" class="p-col-12 p-mb-4 p-md-4 p-mb-md-0" />
+                    <div class="p-col-12 p-md-8">
+                      <p:password value="#{userRegisterBean.user.password}" 
+                                  required="true" 
+                                  requiredMessage="Digite su contraseña"
+                                  />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <f:facet name="footer">
+                <p:commandButton update="messages" ajax="true" value="Registrarse" actionListener="#{userRegisterBean.register()}" class="p-col-12" />
+              </f:facet>
+            </p:card>
+          </h:form>
+          <p:link href="/login" value="Volver" class="back-link" />
+        </div>
+      </main>
+    </ui:composition>
+  </h:body>
+
+</html>

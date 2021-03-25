@@ -1,0 +1,62 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" 
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui">
+  <h:body>
+    <ui:composition>
+      <main class="login-container p-d-flex">
+        <form action="/login" method="post">
+          <div class="text-center py-5 px-3">
+            <p:card class="login-card">
+              <f:facet name="header">
+                <h:graphicImage name="/images/login-banner.jpg" />
+              </f:facet>
+              <f:facet name="title">Iniciar Sesión</f:facet>
+              <f:facet name="subtitle">Recogida de Estudiantes</f:facet>
+              <div name="content">
+                <c:if test="#{param['error']}">
+                  <div class="ui-fluid">
+                    <p:staticMessage severity="error" summary="Credenciales incorrectas" detail="Verifique sus datos de inicio de sessión e intente de nuevo" class="error-message" />
+                  </div>
+                </c:if>
+                <c:if test="#{param['registered']}">
+                  <div class="ui-fluid">
+                    <p:staticMessage severity="info" summary="Usuario registrado" detail="Ahora puede iniciar sesión con sus datos registrados" class="info-message" />
+                  </div>
+                </c:if>
+                <div class="ui-fluid">
+                  <div class="p-field p-grid">
+                    <h:outputLabel value="Número de documento" for="username" class="p-col-12 p-mb-4 p-md-4 p-mb-md-0" />
+                    <div class="p-col-12 p-md-8">
+                      <p:inputNumber id="username" placeholder="Digite su número de documento" value="#{userRegisterBean.user.identification}" decimalPlaces="0" />
+                      <!--<p:inputText id="username" placeholder="Digite su número de documento" />-->
+                    </div>
+                  </div>
+                  <div class="p-field p-grid">
+                    <h:outputLabel value="Contraseña" for="password" class="p-col-12 p-mb-4 p-md-4 p-mb-md-0" />
+                    <div class="p-col-12 p-md-8">
+                      <p:password id="password" placeholder="Digite su contraseña" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <f:facet name="footer">
+                <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only p-col-12"
+                        type="submit">
+                  <span class="ui-button-text ui-c">Ingresar</span>
+                </button>
+              </f:facet>
+            </p:card>
+            <p:link href="/register" value="Registrarse" class="register-link" />
+          </div>
+        </form>
+      </main>
+    </ui:composition>
+  </h:body>
+
+</html>

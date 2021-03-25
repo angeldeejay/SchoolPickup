@@ -1,4 +1,4 @@
-.login-container {
+.register-container {
   display: flex;
   flex-flow: column;
   align-items: center;
@@ -6,44 +6,47 @@
   height: 100vh;
 }
 
-.login-card {
+.register-card {
   flex: 1;
-  width: 480px;
+  width: 550px;
   overflow: hidden;
 }
 
-.login-card .ui-card-title,
-.login-card .ui-card-subtitle {
+.register-card .ui-card-title,
+.register-card .ui-card-subtitle {
   text-align: center;
 }
 
-.login-card .ui-card-content {
+.register-card .ui-card-content {
   padding-bottom: 0 !important;
 }
 
-.login-card .ui-card-content labellabel:not(.ui-selectonemenu-label) {
+.register-card .ui-card-content label:not(.ui-selectonemenu-label) {
   justify-content: flex-end;
   font-weight: bold;
 }
 
-.login-card .ui-card-footer {
+.register-card .ui-card-footer {
   padding-top: 0 !important;
 }
 
-.login-card .info-message,
-.login-card .error-message {
+.register-card .error-message {
   width: 100%;
   margin: 0 0 1rem 0;
   padding: .75rem;
 }
 
-.login-card .error-message > [class*="ui-message-error-"] {
+.register-card .error-message > [class*="ui-message-error-"] {
   line-height: 1.25em;
 }
 
-.register-link {
+.back-link {
   display: flex;
   justify-content: center;
   margin: 1rem auto 0 auto;
   padding: .5rem 0;
+}
+
+.register-messages [class*="-icon"]:not(.ui-icon-close) {
+  display: none !important;
 }

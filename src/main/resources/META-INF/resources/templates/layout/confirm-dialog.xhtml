@@ -1,0 +1,16 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" 
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui">
+  <h:body>
+    <ui:composition>
+      <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+        <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no ui-button-flat" />
+        <p:commandButton value="Aceptar" type="button" styleClass="ui-confirmdialog-yes" />
+      </p:confirmDialog>
+    </ui:composition>
+  </h:body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" 
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui">
+  <h:body>
+    <ui:composition>
+      <div class="navbar-wrapper flex-item p-m-0">
+        <p:menubar class="top-bar">
+          <p:menuitem value="Inicio" icon="pi pi-fw pi-home" url="/dashboard" class="#{routePrefix.equals('dashboard') ? 'active' : ''}" />
+          <c:if test="#{loggedInUser.hasParentRole()}">
+            <p:menuitem value="Estudiantes" icon="pi pi-fw pi-briefcase" url="/students/dashboard" class="#{routePrefix.equals('students') ? 'active' : ''}" />
+            <p:menuitem value="Recoger" icon="pi pi-fw pi-directions-alt" url="/pickup-requests/dashboard" class="#{routePrefix.equals('pickup-requests') ? 'active' : ''}" />
+          </c:if>
+          <c:if test="#{loggedInUser.hasAdminRole()}">
+            <p:menuitem value="Parientes" icon="pi pi-fw pi-users" disabled="true" url="/parents/dashboard" class="#{routePrefix.equals('parents') ? 'active' : ''}" />
+            <p:menuitem value="Estudiantes" icon="pi pi-fw pi-briefcase" disabled="true" url="/students/dashboard" class="#{routePrefix.equals('students') ? 'active' : ''}" />
+            <p:menuitem value="Entregar" icon="pi pi-fw pi-directions" url="/pickup-requests/dashboard" class="#{routePrefix.equals('pickup-requests') ? 'active' : ''}" />
+          </c:if>
+          <p:divider layout="vertical" />
+          <p:submenu label="#{loggedInUser.getFullName()}" icon="pi pi-fw pi-user">
+            <p:menuitem value="Salir" icon="pi pi-fw pi-power-off" url="/logout" />
+          </p:submenu>
+        </p:menubar>
+      </div>
+    </ui:composition>
+  </h:body>
+
+</html>

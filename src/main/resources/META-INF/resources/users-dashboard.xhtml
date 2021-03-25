@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+  <h:body>
+    <ui:composition template="/templates/layout.xhtml">
+      <ui:define name="stylesheet">
+        <h:outputStylesheet name="/css/dashboard.css" />
+      </ui:define>
+      <ui:define name="breadcrumbLinks">
+        <p:menuitem value="Usuarios" url="/users/dashboard" />
+      </ui:define>
+      <ui:define name="innerContent">
+        <h:form>
+          <h:outputText value="#{routePrefix}" />
+        </h:form>
+      </ui:define>
+      <ui:define name="bodyContent">
+        <ui:include src="/templates/dashboard.xhtml" />
+      </ui:define>
+    </ui:composition>
+  </h:body>
+</html>

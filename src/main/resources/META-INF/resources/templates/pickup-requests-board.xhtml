@@ -1,0 +1,91 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" 
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+  <h:body>
+    <ui:composition>
+      <h:form class="pending-pickup-requests-container">
+        <h:panelGroup layout="block" id="board" class="p-grid p-ai-stretch pending-pickup-requests">
+          <div class="p-col p-col-4">
+            <div class="flex-container">
+              <div class="flex-item">
+                <p:panel header="Carril 1" class="level-panel"/>
+              </div>
+              <div class="flex-item">
+                <c:if test="#{PickupRequestsPoll.slotOneSize > 0}">
+                  <ui:repeat value="#{PickupRequestsPoll.slotOne}" var="pickupPending">
+                    <p:card class="pickup-card">
+                      <f:facet name="title">
+                        <h:outputText value="#{pickupPending.student.firstName} #{pickupPending.student.lastName}"/>
+                      </f:facet>
+                      <f:facet name="subtitle">
+                        <h:outputText value="#{pickupPending.parent.user.firstName} #{pickupPending.parent.user.lastName}"/>
+                      </f:facet>
+                      <f:facet name="footer">
+                        <p:commandButton value="Entregado" class="p-col-12"/>
+                      </f:facet>
+                    </p:card>
+                  </ui:repeat>
+                </c:if>
+              </div>
+            </div>
+          </div>
+          <div class="p-col p-col-4">
+            <div class="flex-container">
+              <div class="flex-item">
+                <p:panel header="Carril 2" class="level-panel"/>
+              </div>
+              <div class="flex-item">
+                <c:if test="#{PickupRequestsPoll.slotTwoSize > 0}">
+                  <ui:repeat value="#{PickupRequestsPoll.slotTwo}" var="pickupPending">
+                    <p:card class="pickup-card">
+                      <f:facet name="title">
+                        <h:outputText value="#{pickupPending.student.firstName} #{pickupPending.student.lastName}"/>
+                      </f:facet>
+                      <f:facet name="subtitle">
+                        <h:outputText value="#{pickupPending.parent.user.firstName} #{pickupPending.parent.user.lastName}"/>
+                      </f:facet>
+                      <f:facet name="footer">
+                        <p:commandButton value="Entregado" class="p-col-12"/>
+                      </f:facet>
+                    </p:card>
+                  </ui:repeat>
+                </c:if>
+              </div>
+            </div>
+          </div>
+          <div class="p-col p-col-4">
+            <div class="flex-container">
+              <div class="flex-item">
+                <p:panel header="Carril 3" class="level-panel"/>
+              </div>
+              <div class="flex-item">
+                <c:if test="#{PickupRequestsPoll.slotThreeSize > 0}">
+                  <ui:repeat value="#{PickupRequestsPoll.slotThree}" var="pickupPending">
+                    <p:card class="pickup-card">
+                      <f:facet name="title">
+                        <h:outputText value="#{pickupPending.student.firstName} #{pickupPending.student.lastName}"/>
+                      </f:facet>
+                      <f:facet name="subtitle">
+                        <h:outputText value="#{pickupPending.parent.user.firstName} #{pickupPending.parent.user.lastName}"/>
+                      </f:facet>
+                      <f:facet name="footer">
+                        <p:commandButton value="Entregado" class="p-col-12"/>
+                      </f:facet>
+                    </p:card>
+                  </ui:repeat>
+                </c:if>
+              </div>
+            </div>
+          </div>
+        </h:panelGroup>
+        <p:poll interval="5" delay="1000" ignoreComponentNotFound="true" autoStart="true" listener="#{PickupRequestsPoll.callService}" update="board"/>
+      </h:form>
+    </ui:composition>
+  </h:body>
+</html>

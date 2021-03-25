@@ -5,6 +5,7 @@
  */
 package com.uniajc.schoolpickup.security;
 
+import com.uniajc.schoolpickup.entities.Parent;
 import com.uniajc.schoolpickup.entities.User;
 import com.uniajc.schoolpickup.util.Mocker;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -35,7 +36,6 @@ class WithMockAuthorityUserSecurityContextFactory
   private Authentication getAdminAuthentication() {
     User user;
     user = Mocker.getUser(999999L);
-    user.setEmail("admin@company.com");
     user.setParent(null);
     CustomUserDetails principal = new CustomUserDetails(user);
     UsernamePasswordAuthenticationToken token =
@@ -46,10 +46,10 @@ class WithMockAuthorityUserSecurityContextFactory
   }
 
   private Authentication getParentAuthentication() {
-    User user;
-    user = Mocker.getUser(999998L);
-    user.setEmail("parent@company.com");
-    user.setParent(Mocker.getParent(user.getId()));
+	Parent parent = Mocker.getParent(999998L);
+    User user = Mocker.getUser(parent.getId());
+    parent.setEmail("parent@company.com");
+    user.setParent(parent);
     CustomUserDetails principal = new CustomUserDetails(user);
     UsernamePasswordAuthenticationToken token =
         new UsernamePasswordAuthenticationToken(
