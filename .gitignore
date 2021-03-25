@@ -54,3 +54,5 @@ wildfly/
 /nbproject/
 .factorypath
 .factorypath
+nbactions.xml
+nb-configuration.xml
