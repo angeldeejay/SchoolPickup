@@ -14,6 +14,7 @@ public class Mocker {
     Parent entity = new Parent();
     entity.setId(id);
     entity.setEmail(faker.internet().emailAddress());
+    entity.setPhone(faker.phoneNumber().cellPhone());
     entity.setUser(getUser(id));
     return entity;
   }

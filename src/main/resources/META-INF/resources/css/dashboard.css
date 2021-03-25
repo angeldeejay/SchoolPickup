@@ -79,9 +79,16 @@ body {
   transform: translate(-50%, -50%);
 }
 
+.pending-pickup-requests-container {
+  max-width: 1024px !important;
+  margin: 0 auto;
+}
+
 .pending-pickup-requests-container,
 .pending-pickup-requests {
   height: 100%;
+  position: relative;
+  z-index: 1;
 }
 
 .pending-pickup-requests .level-panel .ui-panel-content {
@@ -96,14 +103,107 @@ body {
 }
 
 .pickup-card {
-  margin: 1rem;
+  margin: .5rem 0;
 }
 
 .pickup-card:last-child {
   margin-bottom: 0;
 }
 
-.pickup-card .ui-card-content {
-  display: none;
-  margin-bottom: 1rem;
+.pickup-data-description strong {
+  font-weight: bold;
+}
+
+.pickup-data-description address {
+  padding-left: 1rem;
+  padding-bottom: 1rem;
+}
+
+.pickup-data-description address .pi {
+  margin-right: .5rem;
+}
+
+.pickup-card-bachillerato .ui-panel-titlebar {
+  background: #689F38 !important;
+  color: #ffffff !important; 
+}
+
+.pickup-card-primaria .ui-panel-titlebar {
+  background: #FBC02D !important;
+  color: #212529 !important; 
+}
+
+.pickup-card-pre-escolar .ui-panel-titlebar {
+  background: #D32F2F !important;
+  color: #ffffff !important; 
+}
+
+.students-crud-form .ui-datatable {
+  margin-top: 1rem; 
+}
+
+.students-crud-form .ui-datatable-header {
+  text-align: right !important;
+}
+
+.students-crud-form .ui-datatable .container-filter {
+  display: inline-block;
+  position: relative;
+}
+
+.students-crud-form .ui-dialog-footer .ui-button {
+  min-width: 6rem; 
+}
+
+.students-crud-form .ui-datatable .ui-column-filter {
+  display: none; 
+}
+
+.students-crud-form .edit-button.ui-button,
+.students-crud-form .pickup-button.ui-button {
+  margin-right: .5rem; 
+}
+
+.students-crud-form .pickup-button.ui-button {
+  min-width: 130px;
+}
+
+.students-crud-form .orders-subtable {
+  padding: 1rem; 
+}
+
+.students-crud-form .ui-datatable thead > tr > th:last-child,
+.students-crud-form .ui-datatable .ui-datatable-data > tr > td:last-child {
+  width: 20rem;
+  text-align: center;
+}
+
+.student-badge {
+  border-radius: 2px;
+  padding: .25em .5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: .3px; 
+  display: inline-block;
+}
+
+.student-badge.status-available,
+.student-badge.status-bachillerato {
+  background: #C8E6C9;
+  color: #256029; 
+
+}
+
+.student-badge.status-pending,
+.student-badge.status-pre-escolar {
+  background: #FFCDD2;
+  color: #C63737; 
+
+}
+
+.student-badge.status-primaria {
+  background: #FEEDAF;
+  color: #8A5340; 
+
 }

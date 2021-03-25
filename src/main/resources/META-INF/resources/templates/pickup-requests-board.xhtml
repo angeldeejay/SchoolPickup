@@ -9,7 +9,7 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
   <h:body>
     <ui:composition>
-      <h:form class="pending-pickup-requests-container">
+      <h:form class="pending-pickup-requests-container" id="form">
         <h:panelGroup layout="block" id="board" class="p-grid p-ai-stretch pending-pickup-requests">
           <div class="p-col p-col-4">
             <div class="flex-container">
@@ -19,17 +19,27 @@
               <div class="flex-item">
                 <c:if test="#{PickupRequestsPoll.slotOneSize > 0}">
                   <ui:repeat value="#{PickupRequestsPoll.slotOne}" var="pickupPending">
-                    <p:card class="pickup-card">
-                      <f:facet name="title">
-                        <h:outputText value="#{pickupPending.student.firstName} #{pickupPending.student.lastName}"/>
-                      </f:facet>
-                      <f:facet name="subtitle">
-                        <h:outputText value="#{pickupPending.parent.user.firstName} #{pickupPending.parent.user.lastName}"/>
-                      </f:facet>
-                      <f:facet name="footer">
-                        <p:commandButton value="Entregado" class="p-col-12"/>
-                      </f:facet>
-                    </p:card>
+                    <p:panel class="pickup-card pickup-card-#{pickupPending.student.level.toLowerCase()}" header="Solicitud pendiente">
+                      <h:panelGroup layout="block" class="p-m-0">
+                        <div class="pickup-data-description">
+                          <div style="padding-bottom: .25rem"><strong>En fila:</strong></div>
+                          <div>
+                            <address>
+                              <strong><h:outputText value="#{pickupPending.parent.user.firstName} #{pickupPending.parent.user.lastName}"/></strong><br />
+                              <i class="pi pi-id-card" />CC. <h:outputText value="#{pickupPending.parent.user.identification}"/><br />
+                              <i class="pi pi-phone" /><h:outputText value="#{pickupPending.parent.phone}"/>
+                            </address>
+                          </div>
+                          <div style="padding-bottom: .25rem"><strong>Esperando a:</strong></div>
+                          <div>
+                            <address style="padding-bottom: 0">
+                              <strong><h:outputText value="#{pickupPending.student.firstName} #{pickupPending.student.lastName}"/></strong><br />
+                              <i class="pi pi-sort-up" />CC. <h:outputText value="#{pickupPending.student.level}"/>
+                            </address>
+                          </div>
+                        </div>
+                      </h:panelGroup>
+                    </p:panel>
                   </ui:repeat>
                 </c:if>
               </div>
@@ -43,17 +53,27 @@
               <div class="flex-item">
                 <c:if test="#{PickupRequestsPoll.slotTwoSize > 0}">
                   <ui:repeat value="#{PickupRequestsPoll.slotTwo}" var="pickupPending">
-                    <p:card class="pickup-card">
-                      <f:facet name="title">
-                        <h:outputText value="#{pickupPending.student.firstName} #{pickupPending.student.lastName}"/>
-                      </f:facet>
-                      <f:facet name="subtitle">
-                        <h:outputText value="#{pickupPending.parent.user.firstName} #{pickupPending.parent.user.lastName}"/>
-                      </f:facet>
-                      <f:facet name="footer">
-                        <p:commandButton value="Entregado" class="p-col-12"/>
-                      </f:facet>
-                    </p:card>
+                    <p:panel class="pickup-card pickup-card-#{pickupPending.student.level.toLowerCase()}" header="Solicitud pendiente">
+                      <h:panelGroup layout="block" class="p-m-0">
+                        <div class="pickup-data-description">
+                          <div style="padding-bottom: .25rem"><strong>En fila:</strong></div>
+                          <div>
+                            <address>
+                              <strong><h:outputText value="#{pickupPending.parent.user.firstName} #{pickupPending.parent.user.lastName}"/></strong><br />
+                              <i class="pi pi-id-card" />CC. <h:outputText value="#{pickupPending.parent.user.identification}"/><br />
+                              <i class="pi pi-phone" /><h:outputText value="#{pickupPending.parent.phone}"/>
+                            </address>
+                          </div>
+                          <div style="padding-bottom: .25rem"><strong>Esperando a:</strong></div>
+                          <div>
+                            <address style="padding-bottom: 0">
+                              <strong><h:outputText value="#{pickupPending.student.firstName} #{pickupPending.student.lastName}"/></strong><br />
+                              <i class="pi pi-sort-up" />CC. <h:outputText value="#{pickupPending.student.level}"/>
+                            </address>
+                          </div>
+                        </div>
+                      </h:panelGroup>
+                    </p:panel>
                   </ui:repeat>
                 </c:if>
               </div>
@@ -67,25 +87,35 @@
               <div class="flex-item">
                 <c:if test="#{PickupRequestsPoll.slotThreeSize > 0}">
                   <ui:repeat value="#{PickupRequestsPoll.slotThree}" var="pickupPending">
-                    <p:card class="pickup-card">
-                      <f:facet name="title">
-                        <h:outputText value="#{pickupPending.student.firstName} #{pickupPending.student.lastName}"/>
-                      </f:facet>
-                      <f:facet name="subtitle">
-                        <h:outputText value="#{pickupPending.parent.user.firstName} #{pickupPending.parent.user.lastName}"/>
-                      </f:facet>
-                      <f:facet name="footer">
-                        <p:commandButton value="Entregado" class="p-col-12"/>
-                      </f:facet>
-                    </p:card>
+                    <p:panel class="pickup-card pickup-card-#{pickupPending.student.level.toLowerCase()}" header="Solicitud pendiente">
+                      <h:panelGroup layout="block" class="p-m-0">
+                        <div class="pickup-data-description">
+                          <div style="padding-bottom: .25rem"><strong>En fila:</strong></div>
+                          <div>
+                            <address>
+                              <strong><h:outputText value="#{pickupPending.parent.user.firstName} #{pickupPending.parent.user.lastName}"/></strong><br />
+                              <i class="pi pi-id-card" />CC. <h:outputText value="#{pickupPending.parent.user.identification}"/><br />
+                              <i class="pi pi-phone" /><h:outputText value="#{pickupPending.parent.phone}"/>
+                            </address>
+                          </div>
+                          <div style="padding-bottom: .25rem"><strong>Esperando a:</strong></div>
+                          <div>
+                            <address style="padding-bottom: 0">
+                              <strong><h:outputText value="#{pickupPending.student.firstName} #{pickupPending.student.lastName}"/></strong><br />
+                              <i class="pi pi-sort-up" />CC. <h:outputText value="#{pickupPending.student.level}"/>
+                            </address>
+                          </div>
+                        </div>
+                      </h:panelGroup>
+                    </p:panel>
                   </ui:repeat>
                 </c:if>
               </div>
             </div>
           </div>
         </h:panelGroup>
-        <p:poll interval="5" delay="1000" ignoreComponentNotFound="true" autoStart="true" listener="#{PickupRequestsPoll.callService}" update="board"/>
       </h:form>
+      <p:poll interval="1" delay="500" ignoreComponentNotFound="true" autoStart="true" listener="#{PickupRequestsPoll.callService}" update="form"/>
     </ui:composition>
   </h:body>
 </html>

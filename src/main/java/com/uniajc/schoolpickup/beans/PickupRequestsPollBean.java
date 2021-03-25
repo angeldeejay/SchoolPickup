@@ -2,9 +2,7 @@ package com.uniajc.schoolpickup.beans;
 
 import com.uniajc.schoolpickup.entities.PickupRequest;
 import com.uniajc.schoolpickup.services.PickupRequestService;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;

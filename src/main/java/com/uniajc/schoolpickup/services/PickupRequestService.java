@@ -1,6 +1,8 @@
 package com.uniajc.schoolpickup.services;
 
+import com.uniajc.schoolpickup.entities.Parent;
 import com.uniajc.schoolpickup.entities.PickupRequest;
+import com.uniajc.schoolpickup.entities.Student;
 import com.uniajc.schoolpickup.generics.GenericService;
 import com.uniajc.schoolpickup.repositories.PickupRequestRepository;
 import java.util.List;
@@ -53,5 +55,21 @@ public class PickupRequestService extends GenericService<PickupRequest> {
 
   public List<PickupRequest> findPending() {
     return repository.findPendingRequests();
+  }
+
+  public List<PickupRequest> findPending(Student student) {
+    return repository.findPendingRequests(student);
+  }
+
+  public List<PickupRequest> findPending(Parent parent) {
+    return repository.findPendingRequests(parent);
+  }
+
+  public void deleteAllAssociations(Student student) {
+    repository.findByEntity(student).forEach((pr) -> repository.deleteById(pr.getId()));
+  }
+
+  public void deleteAllAssociations(Parent parent) {
+    repository.findByEntity(parent).forEach((pr) -> repository.deleteById(pr.getId()));
   }
 }

@@ -6,7 +6,8 @@
       xmlns:h="http://java.sun.com/jsf/html" 
       xmlns:f="http://java.sun.com/jsf/core" 
       xmlns:ui="http://java.sun.com/jsf/facelets" 
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
   <h:body>
     <ui:composition>
       <main class="register-container p-d-flex">
@@ -58,6 +59,18 @@
                         <f:validateRegex
                           pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                       </p:inputText>
+                    </div>
+                  </div>
+                  <div class="p-field p-grid">
+                    <h:outputLabel value="Número de teléfono" for="@next" class="p-col-12 p-mb-4 p-md-4 p-mb-md-0" />
+                    <div class="p-col-12 p-md-8">
+                      <pe:inputPhone initialCountry="co"
+                                     required="true" 
+                                     requiredMessage="Teléfono inválido"
+                                     validatorMessage="Teléfono inválido"
+                                     value="#{userRegisterBean.parent.phone}"
+                                     formatOnDisplay="true">
+                      </pe:inputPhone>
                     </div>
                   </div>
                   <div class="p-field p-grid">

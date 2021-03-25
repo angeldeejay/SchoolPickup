@@ -4,7 +4,6 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
   <h:body>
     <ui:composition template="/templates/layout.xhtml">
@@ -15,9 +14,9 @@
         <p:menuitem value="Estudiantes" url="/students/dashboard" />
       </ui:define>
       <ui:define name="innerContent">
-        <h:form>
-          <h:outputText value="#{routePrefix}" />
-        </h:form>
+        <ui:include src="/templates/students-board.xhtml">
+          <ui:param name="parent" value="#{loggedInUser.parent}"/>
+        </ui:include>
       </ui:define>
       <ui:define name="bodyContent">
         <ui:include src="/templates/dashboard.xhtml" />

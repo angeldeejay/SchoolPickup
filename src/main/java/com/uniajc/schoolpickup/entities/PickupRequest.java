@@ -38,11 +38,6 @@ public class PickupRequest extends GenericEntity {
   @JoinColumn(name = "student_id", referencedColumnName = "id")
   Student student;
 
-  @JsonManagedReference
-  @OneToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "user_id", referencedColumnName = "id")
-  User user;
-
   @Column(name = "picked_up_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date pickedUpAt;
@@ -78,14 +73,6 @@ public class PickupRequest extends GenericEntity {
 
   public void setStudent(Student student) {
     this.student = student;
-  }
-
-  public User getUser() {
-    return user;
-  }
-
-  public void setUser(User user) {
-    this.user = user;
   }
 
   public Date getPickedUpAt() {

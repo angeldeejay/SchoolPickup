@@ -44,6 +44,7 @@ public class ParentService extends GenericService<Parent> {
     if (entity.isPresent()) {
       Parent entityTarget = entity.get();
       entityTarget.setEmail(data.getEmail());
+      entityTarget.setPhone(data.getPhone());
       entityTarget.setUser(data.getUser());
       return Optional.of(repository.save(entityTarget));
     }

@@ -56,3 +56,5 @@ wildfly/
 .factorypath
 nbactions.xml
 nb-configuration.xml
+.factorypath
+.editorconfig

@@ -1,6 +1,7 @@
 package com.uniajc.schoolpickup.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.uniajc.schoolpickup.generics.GenericEntity;
 import java.util.List;
@@ -28,6 +29,9 @@ public class Parent extends GenericEntity {
 
   @Column(name = "email", nullable = false)
   String email;
+
+  @Column(name = "phone", nullable = false)
+  String phone;
 
   @JsonBackReference
   @OneToOne(fetch = FetchType.EAGER)
@@ -57,6 +61,14 @@ public class Parent extends GenericEntity {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public String getPhone() {
+    return phone;
+  }
+
+  public void setPhone(String phone) {
+    this.phone = phone;
   }
 
   public User getUser() {

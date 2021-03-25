@@ -1,5 +1,6 @@
 package com.uniajc.schoolpickup.services;
 
+import com.uniajc.schoolpickup.entities.Parent;
 import com.uniajc.schoolpickup.entities.Student;
 import com.uniajc.schoolpickup.generics.GenericService;
 import com.uniajc.schoolpickup.repositories.StudentRepository;
@@ -49,5 +50,9 @@ public class StudentService extends GenericService<Student> {
       return Optional.of(repository.save(entityTarget));
     }
     return Optional.empty();
+  }
+
+  public List<Student> findByParent(Parent parent) {
+	return repository.findByParent(parent);
   }
 }

@@ -1,0 +1,148 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" 
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+  <h:body>
+    <ui:composition>
+      <h:form id="form">
+        <div class="card students-crud-form">
+          <p:toolbar>
+            <p:toolbarGroup style="width: 100%; position:relative">
+            </p:toolbarGroup>
+          </p:toolbar>
+          <p:dataTable id="dt-students" widgetVar="dtStudents" var="student" value="#{crudView.students}"
+                       reflow="true" styleClass="students-table"
+                       selection="#{crudView.selectedStudent}" rowKey="#{student.id}" paginator="false"
+                       rowSelectMode="single">
+            <f:facet name="header">
+              <div class="students-table-header" style="display: block; width: 100%">
+                <p:commandButton value="Agregar estudiante" icon="pi pi-plus" actionListener="#{crudView.openNew}"
+                                 update=":form:manage-student-content" oncomplete="PF('manageStudentDialog').show()"
+                                 styleClass="ui-button-primary" style="float: left">
+                  <p:resetInput target=":form:manage-student-content"/>
+                </p:commandButton>
+                <span style="font-weight: bold">Estudiantes</span>
+
+                <span class="filter-container ui-input-icon-left">
+                  <i class="pi pi-search"></i>
+                  <p:inputText id="globalFilter" onkeyup="PF('dtStudents').filter()" placeholder="Search"/>
+                </span>
+              </div>
+            </f:facet>
+            <p:column headerText="Nombres" sortBy="#{student.firstName}" filterBy="#{student.firstName}">
+              <h:outputText value="#{student.firstName}"/>
+            </p:column>
+            <p:column headerText="Apellidos" sortBy="#{student.lastName}" filterBy="#{student.lastName}">
+              <h:outputText value="#{student.lastName}"/>
+            </p:column>
+            <p:column headerText="Nivel" sortBy="#{student.level}" filterBy="#{student.level}">
+              <h:outputText styleClass="student-badge status-#{student.level.toLowerCase()}" value="#{student.level}"/>
+            </p:column>
+            <p:column headerText="Estado" sortBy="#{student.pending}">
+              <p:outputPanel rendered="#{student.pending}" class="student-badge status-pending">
+                <i class="pi pi-spin pi-spinner " style="margin-right: .25rem" />
+                Pendiente en carril #{student.pendingPickupRequest.slot}
+              </p:outputPanel>
+              <p:outputPanel rendered="#{!student.pending}" class="student-badge status-available">
+                <i class="pi pi-check " style="margin-right: .25rem" />
+                Disponible para recoger
+              </p:outputPanel>
+            </p:column>
+            <p:column exportable="false">
+              <p:commandButton icon="pi pi-exclamation-circle" update=":form:pickup-student-content" rendered="#{!student.pending}"
+                               oncomplete="PF('pickupStudentDialog').show()"
+                               styleClass="pickup-button rounded-button ui-button-info" process="@this" value="Recoger">
+                <f:setPropertyActionListener value="#{student}" target="#{crudView.selectedStudent}"/>
+                <p:resetInput target=":form:pickup-student-content"/>
+              </p:commandButton>
+              <p:commandButton class="pickup-button rounded-button ui-button-success" rendered="#{student.pending}" icon="pi pi-check-circle" value="Está conmigo" process="@this"
+                               oncomplete="PF('pickedUpStudentDialog').show()" >
+                <f:setPropertyActionListener value="#{student}" target="#{crudView.selectedStudent}"/>
+              </p:commandButton>
+              <p:commandButton icon="pi pi-pencil" update=":form:manage-student-content"
+                               oncomplete="PF('manageStudentDialog').show()"
+                               styleClass="edit-button rounded-button ui-button-secondary" process="@this">
+                <p:resetInput target=":form:manage-student-content"/>
+                <f:setPropertyActionListener value="#{student}" target="#{crudView.selectedStudent}"/>
+              </p:commandButton>
+              <p:commandButton class="ui-button-danger rounded-button delete-button" icon="pi pi-trash" process="@this"
+                               oncomplete="PF('deleteStudentDialog').show()" >
+                <f:setPropertyActionListener value="#{student}" target="#{crudView.selectedStudent}"/>
+              </p:commandButton>
+            </p:column>
+          </p:dataTable>
+
+          <p:dialog header="Estudiante" showEffect="fade" modal="true"
+                    widgetVar="manageStudentDialog" responsive="true">
+            <p:outputPanel id="manage-student-content" class="ui-fluid">
+              <p:outputPanel rendered="#{not empty crudView.selectedStudent}">
+                <div class="p-field">
+                  <p:outputLabel for="firstName">Nombres</p:outputLabel>
+                  <p:inputText id="firstName" value="#{crudView.selectedStudent.firstName}" required="true"/>
+                </div>
+                <div class="p-field">
+                  <p:outputLabel for="lastName">Apellidos</p:outputLabel>
+                  <p:inputText id="lastName" value="#{crudView.selectedStudent.lastName}" required="true"/>
+                </div>
+                <div class="p-field">
+                  <p:outputLabel for="level">Nivel</p:outputLabel>
+                  <p:selectOneRadio id="level" value="#{crudView.selectedStudent.level}" layout="responsive" columns="1" required="true" unselectable="false">
+                    <f:selectItem itemLabel="Pre-escolar" itemValue="Pre-escolar"/>
+                    <f:selectItem itemLabel="Primaria" itemValue="Primaria"/>
+                    <f:selectItem itemLabel="Bachillerato" itemValue="Bachillerato"/>
+                  </p:selectOneRadio>
+                </div>
+              </p:outputPanel>
+            </p:outputPanel>
+            <f:facet name="footer">
+              <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{crudView.saveStudent}" update="manage-student-content" process="manage-student-content @this"/>
+              <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageStudentDialog').hide();PF('dtStudents').unselectAllRows();" class="ui-button-secondary">
+                 <p:resetInput target=":form:manage-student-content" />
+              </p:commandButton>
+            </f:facet>
+          </p:dialog>
+          <p:dialog header="Recoger estudiante" showEffect="fade" modal="true"
+                    widgetVar="pickupStudentDialog" responsive="true">
+            <p:outputPanel id="pickup-student-content" class="ui-fluid">
+              <p:outputPanel rendered="#{not empty crudView.selectedStudent}">
+                <div class="p-field">
+                  <p:outputLabel for="level">Escoja un carril</p:outputLabel>
+                  <p:selectOneRadio id="slot" value="#{crudView.currentPickupRequest.slot}" layout="responsive" columns="1" required="true" unselectable="false">
+                    <f:selectItem itemLabel="Carril 1" itemValue="1"/>
+                    <f:selectItem itemLabel="Carril 2" itemValue="2"/>
+                    <f:selectItem itemLabel="Carril 3" itemValue="3"/>
+                  </p:selectOneRadio>
+                </div>
+              </p:outputPanel>
+            </p:outputPanel>
+            <f:facet name="footer">
+              <p:commandButton value="Recoger" icon="pi pi-check" actionListener="#{crudView.pickupStudent}" update="pickup-student-content" process="pickup-student-content @this"/>
+              <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('pickupStudentDialog').hide();PF('dtStudents').unselectAllRows();" class="ui-button-secondary">
+                 <p:resetInput target=":form:pickup-student-content" />
+              </p:commandButton>
+            </f:facet>
+          </p:dialog>
+          <p:confirmDialog widgetVar="deleteStudentDialog" showEffect="fade" width="300" message="¿Desea borrar este estudiante?" header="Eliminar" severity="warn">
+            <p:commandButton value="Si" icon="pi pi-check" actionListener="#{crudView.deleteStudent}" process="@this" oncomplete="PF('deleteStudentDialog').hide()"/>
+            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times" onclick="PF('deleteStudentDialog').hide()"/>
+          </p:confirmDialog>
+          <p:confirmDialog widgetVar="pickedUpStudentDialog" showEffect="fade" width="300" message="¿El estudiante ya está con usted?" header="Confirmar" severity="warn">
+            <p:commandButton value="Si" icon="pi pi-check" actionListener="#{crudView.pickedUpStudent}" process="@this" oncomplete="PF('pickedUpStudentDialog').hide()"/>
+            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times" onclick="PF('pickedUpStudentDialog').hide()"/>
+          </p:confirmDialog>
+
+          <!--<p:confirmDialog global="true" showEffect="fade" width="300">
+            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
+                             icon="pi pi-times"/>
+          </p:confirmDialog>-->
+        </div>
+      </h:form>
+    </ui:composition>
+  </h:body>
+</html>
