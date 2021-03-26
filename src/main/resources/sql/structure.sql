@@ -1,3 +1,4 @@
+-- Clean
 DROP TABLE IF EXISTS `pickup_requests`;
 DROP TABLE IF EXISTS `students`;
 DROP TABLE IF EXISTS `parents`;
@@ -52,4 +53,4 @@ CREATE TABLE `pickup_requests` (
 
 -- Data (all passwords are '123456')
 INSERT INTO `users` (`first_name`, `last_name`, `identification`, `password`) VALUES
-('Usuario',	'Administrador',	'9999999999',	'$2a$10$Vc.E.DfAqOfzWMeVFYplkOhEqXoQtlC/VKxVzrdCluMxiIz.nZdWC');
+('Usuario',	'Administrador', '9999999999', '$2a$10$Vc.E.DfAqOfzWMeVFYplkOhEqXoQtlC/VKxVzrdCluMxiIz.nZdWC');
