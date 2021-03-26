@@ -21,7 +21,7 @@ Institucdión Universitaria Antonio José Camacho
 * [Estructura y datos semilla](https://github.com/angeldeejay/SchoolPickup/blob/master/src/main/resources/sql/structure.sql)
 
 ## Ejecución
-El proyecto usa Maven Wrapper, por lo que no necesita tener Maven instalado localmente. Sólo una conexión a internet, el Java Development Kit (JDK) y Java Runtime Environment (JRE)
+El proyecto usa Maven Wrapper, por lo que no necesita tener Maven instalado localmente. Sólo una conexión a internet, Java Development Kit (JDK) y Java Runtime Environment (JRE)
 
 ### Windows
 Ejecutar como administrador:
